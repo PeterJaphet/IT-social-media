@@ -45,16 +45,14 @@ const Login = () => {
           <div
             className="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
             style={{
-              backgroundImage: `url("https://via.placeholder.com/800x950.png")`,
+              backgroundImage: `url("https://i.ibb.co/2nXTr8V/800-emu-university-new-horizons.png")`,
             }}
           ></div>
           <div className="col-xl-7 vh-100 align-items-center d-flex bg-white rounded-3 overflow-hidden">
             <div className="card shadow-none border-0 ms-auto me-auto login-card">
               <div className="card-body rounded-0 text-left">
                 <h2 className="fw-700 display1-size display2-md-size mb-3">
-                  Login into <br />
-                  your account
-                </h2>
+                  LOG IN TO YOUR ACCOUNT <br /></h2>
                 <form onSubmit={handleSubmit}>
                   <div className="form-group icon-input mb-3">
                     <i className="font-sm ti-email text-grey-500 pe-0"></i>
@@ -100,7 +98,7 @@ const Login = () => {
                      
                       className="form-control text-center style2-input text-white fw-600 bg-dark border-0 p-0 "
                     >
-                      Login
+                      Submit
                     </button>
                     {error && <div className="error">{console.log('hello')}</div>}
                   </div>
