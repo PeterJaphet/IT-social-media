@@ -102,7 +102,7 @@ const Login = () => {
                     >
                       Login
                     </button>
-                    {error && <div className="error"><p>cnoiuwuwq</p>{error}</div>}
+                    {error && <div className="error">{console.log('hello')}</div>}
                   </div>
                  
                   <h6 className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">
