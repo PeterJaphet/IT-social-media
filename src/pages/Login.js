@@ -6,12 +6,14 @@ import {useLogin} from '../hooks/useLogin';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {login,error, isloading} = useLogin();
+  const {login,isLoading,error} = useLogin();
 
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    console.log(error);
+    await login(email, password);
+
 
   }
   return (
@@ -100,7 +102,7 @@ const Login = () => {
                     >
                       Submit
                     </button>
-                    {error && <div className="error">{console.log('hello')}</div>}
+                    {error && <div className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32" style={{fontColor:"red"}}>{error}</div>}
                   </div>
                  
                   <h6 className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">
