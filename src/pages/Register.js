@@ -82,7 +82,7 @@ class Register extends Component {
                   <div className="form-group icon-input mb-3">
                     <i className="font-sm ti-mobile text-grey-500 pe-0"></i>
                     <input
-                      type="text"
+                      type="tel"
                       className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
                       placeholder="Phone Number"
                     />
@@ -97,22 +97,26 @@ class Register extends Component {
                     />
                   </div>
 
-                  <div className="form-group mb-3 ps-4">
-                    <div><label className="form-label text-grey-900 font-xsss fw-600">Date of Birth</label></div>
-                    <input type="Date" className="ps-5" />
+                  <div className="form-group icon-input mb-3">
+                    <i className="font-sm ti-calendar text-grey-500 pe-0"></i>
+                    <input
+                      type="text"
+                      name="dob"
+                      className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
+                      placeholder="Date of Birth:  DD/MM/YYYY.."
+                    />
                   </div>
 
-                  <div className="form-group mb-3 ps-4">
-                    <div className="form-label text-grey-900 font-xsss fw-600"><label>Gender</label></div>
-                    <select className="form-form-select-sm">
-                      <option value="none" selected disabled>Choose</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">other</option>
+                  <div className="form-control mb-3">
+                    <select className="form-select style2-input text-grey-900 font-x fw-400">
+                    <option value="none" selected disabled>Gender</option>
+                      <option name="Male" value="Male">Male</option>
+                      <option name="Female" value="Female">Female</option>
+                      <option name="Other" value="Other">Other</option>
                     </select>
                   </div>
 
-                  <div className="form-group icon-input mb-3">
+                  <div className="form-group icon-input mb-2">
                     <i className="font-sm ti-lock text-grey-500 pe-0"></i>
                     <input
                       type="Password"
@@ -120,6 +124,7 @@ class Register extends Component {
                       placeholder="Password"
                     />
                   </div>
+
                   <div className="form-group icon-input mb-1">
                     <input
                       type="Password"
@@ -143,10 +148,11 @@ class Register extends Component {
 
                 <div className="col-sm-12 ps-0 text-left">
                   <div className="form-group mb-1">
-                    <button className="btn-group btn-dark form-control text-center style2-input fw-600 p-0"><a className="text-center text-white"
-                      href="/register">
-                      SIGN UP
-                    </a></button>
+                    <button className="btn-group btn-dark form-control text-center style2-input fw-600 p-0">
+                      <a className="text-center text-white" href="/register">
+                        SIGN UP
+                      </a>
+                    </button>
                   </div>
                   <h6 className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">
                     Already have account{" "}
