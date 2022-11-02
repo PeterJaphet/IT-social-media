@@ -221,62 +221,41 @@ const onChange = (e) => {
                   />
                 </div>
 
-                <div className="form-group mb-3 ps-4">
-                  <div>
-                    <label className="form-label text-grey-900 font-xsss fw-600">
-                      Date of Birth
-                    </label>
+                  <div className="form-group icon-input mb-3">
+                    <i className="font-sm ti-calendar text-grey-500 pe-0"></i>
+                    <input
+                      type="text"
+                      name="dob"
+                      className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
+                      placeholder="Date of Birth:  DD/MM/YYYY.."
+                    />
                   </div>
-                  <input
-                    type="Date"
-                    className="ps-5"
-                    name="dateOfBirth"
-                    onChange={onChange}
-                    value={dateOfBirth}
-                   
-                  />
-                </div>
 
-                <div className="form-group mb-3 ps-4">
-                  <div className="form-label text-grey-900 font-xsss fw-600">
-                    <label>Gender</label>
+                  <div className="form-control mb-3">
+                    <select className="form-select style2-input text-grey-900 font-x fw-400">
+                    <option value="none" selected disabled>Gender</option>
+                      <option name="Male" value="Male">Male</option>
+                      <option name="Female" value="Female">Female</option>
+                      <option name="Other" value="Other">Other</option>
+                    </select>
                   </div>
-                  <select
-                    className="form-form-select-sm"
-                    name ="genderType"
-                    onChange={onChange}
-                    value={genderType}              
-                  >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </select>
-                </div>
 
-                <div className="form-group icon-input mb-3">
-                  <i className="font-sm ti-lock text-grey-500 pe-0"></i>
-                  <input
-                    type="Password"
-                    className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
-                    placeholder="Password"
-                    name="password"
-                    onChange={onChange}
-                    value={password}
-                    
-                  />
-                </div>
-                <div className="form-group icon-input mb-1">
-                  <input
-                    type="Password"
-                    className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
-                    placeholder="Confirm Password"
-                    id="password2"
-                    name="confirmPassword"
-                    onChange={onChange}
-                    value={confirmPassword}
-                    
-                  />
-                  <i className="font-sm ti-lock text-grey-500 pe-0"></i>
-                </div>
+                  <div className="form-group icon-input mb-3">
+                    <i className="font-sm ti-lock text-grey-500 pe-0"></i>
+                    <input
+                      type="Password"
+                      className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
+                      placeholder="Password"
+                    />
+                  </div>
+                  <div className="form-group icon-input mb-1">
+                    <input
+                      type="Password"
+                      className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
+                      placeholder="Confirm Password"
+                    />
+                    <i className="font-sm ti-lock text-grey-500 pe-0"></i>
+                  </div>
 
                 <div className="form-check text-left mb-3">
                   <input
