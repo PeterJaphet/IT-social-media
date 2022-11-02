@@ -77,6 +77,20 @@ const onChange = (e) => {
     }))
   }
 
+const handlePhone = (e) => {
+    if (e.target.value.length < 13) {
+      var cleaned = ("" + e.target.value).replace(/\W/ig, "");
+
+      let normValue = `${cleaned.substring(0, 3)}${
+        cleaned.length > 3 ? "-" : ""
+      }${cleaned.substring(3, 6)}${
+        cleaned.length > 6 ? "-" : ""
+      }${cleaned.substring(6, 11)}`;
+
+      e.target.value=normValue;
+    
+  }}
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -198,12 +212,14 @@ const onChange = (e) => {
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-mobile text-grey-500 pe-0"></i>
                   <input
-                    type="text"
+                    type="tel"
                     className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
                     placeholder="Phone Number"
                     name="phoneNo"
-                    onChange={onChange}
+                    onChange={(e)=>{onChange(e); handlePhone(e)}}
+
                     value={phoneNo}
+                   
                     
                   />
                 </div>
@@ -225,18 +241,26 @@ const onChange = (e) => {
                     <i className="font-sm ti-calendar text-grey-500 pe-0"></i>
                     <input
                       type="text"
-                      name="dob"
+                      name="dateOfBirth"
                       className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
-                      placeholder="Date of Birth:  DD/MM/YYYY.."
+                      placeholder="Date of Birth"                     
+                    onChange={onChange}
+                    value={dateOfBirth}
+                    onFocus={(e) => e.target.type='date'}
+                    onBlur={(e) => e.target.type='text'}
                     />
                   </div>
 
                   <div className="form-control mb-3">
-                    <select className="form-select style2-input text-grey-900 font-x fw-400">
-                    <option value="none" selected disabled>Gender</option>
+                    <select className="form-select style2-input text-grey-900 font-x fw-400"
+                    name="genderType"
+                    onChange={onChange}
+                    value={genderType}
+                    onHover={(e) => e.target.type='text'}
+                    placeholder="Select Gender"
+                    >
                       <option name="Male" value="Male">Male</option>
                       <option name="Female" value="Female">Female</option>
-                      <option name="Other" value="Other">Other</option>
                     </select>
                   </div>
 
@@ -246,6 +270,9 @@ const onChange = (e) => {
                       type="Password"
                       className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
                       placeholder="Password"
+                      name="password"
+                    onChange={onChange}
+                    value={password}
                     />
                   </div>
                   <div className="form-group icon-input mb-1">
@@ -253,6 +280,9 @@ const onChange = (e) => {
                       type="Password"
                       className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
                       placeholder="Confirm Password"
+                      name="confirmPassword"
+                    onChange={onChange}
+                    value={confirmPassword}
                     />
                     <i className="font-sm ti-lock text-grey-500 pe-0"></i>
                   </div>
@@ -280,9 +310,9 @@ const onChange = (e) => {
                 
                 <h6 className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">
                   Already have account{" "}
-                  <a href="/login" className="fw-700 ms-1">
+                  <Link to="/login" className="fw-700 ms-1">
                     Login
-                  </a>
+                  </Link>
                 </h6>
               </div>
               </form>
