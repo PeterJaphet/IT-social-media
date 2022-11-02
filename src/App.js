@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-// import * as serviceWorker from './serviceWorker';
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // Create Import File
 import './main.scss';
@@ -50,6 +51,7 @@ import Analytics from './pages/Analytics';
 
 function App() {
     return (
+      <>
         <BrowserRouter>
               <Routes>
               <Route path="/" element={<Home />} />
@@ -97,7 +99,8 @@ function App() {
                   
               </Routes>
         </BrowserRouter>
-    
+        <ToastContainer />
+    </>
       );
     }
 //     serviceWorker.register();
