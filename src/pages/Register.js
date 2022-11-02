@@ -24,21 +24,21 @@ const Register = () => {
   // const [confirmPassword, setConfirmPassword] = useState("");
   // const [firstName, setFirstName] = useState("");
 
-  const [formData, setFormData] = useState({
+  let [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     username: "",
     phoneNo: "",
     address: "",
-    genderType: "",
+    genderType: "Male",
     userRole:0,
     dateOfBirth: "",
     password: "",
     confirmPassword: "",
   });
 
-  const {
+  let {
     firstName,
     lastName,
     email,
@@ -74,27 +74,49 @@ const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }))
+    })
+    )
   }
 
-const handlePhone = (e) => {
-    if (e.target.value.length < 13) {
-      var cleaned = ("" + e.target.value).replace(/\W/ig, "");
+// const handlePhone = (e) => {
+//     if (e.target.value.length < 13) {
+//       var cleaned = ("" + e.target.value).replace(/\W/ig, "");
 
-      let normValue = `${cleaned.substring(0, 3)}${
-        cleaned.length > 3 ? "-" : ""
-      }${cleaned.substring(3, 6)}${
-        cleaned.length > 6 ? "-" : ""
-      }${cleaned.substring(6, 11)}`;
+//       let normValue = `${cleaned.substring(0, 3)}${
+//         cleaned.length > 3 ? "-" : ""
+//       }${cleaned.substring(3, 6)}${
+//         cleaned.length > 6 ? "-" : ""
+//       }${cleaned.substring(6, 11)}`;
 
-      e.target.value=normValue;
+//       e.target.value=normValue;
     
-  }}
+//   }}
 
+// const handleGender = (e) => {
+//   if(e.target.value==="Male"){
+    
+//     parseInt(e.target.value);
+//     e.target.value=1;
+//   }
+//   else{
+//     e.target.value=2
+//   }
+//   console.log(e.target.value)
+// }
   const onSubmit = (e) => {
     e.preventDefault();
+    if(genderType==="Male"){
+    
+      parseInt(genderType);
+      genderType=1;
+    }
+    if(genderType==="Female"){
+      parseInt(genderType);
+      genderType=2
+    }
+    console.log(genderType)
 
-    console.log(formData);
+    
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
@@ -110,7 +132,9 @@ const handlePhone = (e) => {
         userRole,
         dateOfBirth,
         password,
+        confirmPassword
       };
+      console.log(userData);
       dispatch(register(userData));
     }
   };
@@ -216,8 +240,8 @@ const handlePhone = (e) => {
                     className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
                     placeholder="Phone Number"
                     name="phoneNo"
-                    onChange={(e)=>{onChange(e); handlePhone(e)}}
-
+                    onChange={(e)=>{onChange(e)}}
+                    // ; handlePhone(e)
                     value={phoneNo}
                    
                     
@@ -254,9 +278,9 @@ const handlePhone = (e) => {
                   <div className="form-control mb-3">
                     <select className="form-select style2-input text-grey-900 font-x fw-400"
                     name="genderType"
-                    onChange={onChange}
+                    onChange={(e)=>{onChange(e);}}
                     value={genderType}
-                    onHover={(e) => e.target.type='text'}
+                    // onHover={(e) => e.target.type='text'}
                     placeholder="Select Gender"
                     >
                       <option name="Male" value="Male">Male</option>
