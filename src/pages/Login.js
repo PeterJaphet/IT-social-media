@@ -1,19 +1,19 @@
 import React, { Fragment } from "react";
 import { useState } from "react";
 import {Link} from 'react-router-dom';
-import {useLogin} from '../hooks/useLogin';
+// import {useLogin} from '../hooks/useLogin';
 
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {login,isLoading,error} = useLogin();
+  // const {login,isLoading,error} = useLogin();
 
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    console.log(error);
-    await login(email, password);
+    console.log(Login);
+    // await login(email, password);
 
 
   }
@@ -99,9 +99,9 @@ const Login = () => {
                 <div className="col-sm-12 p-0 text-left">
                   <div className="form-group mb-1">
                   <button className="btn-group btn-dark form-control text-center style2-input fw-600 p-0">
-                      SIGN IN
+                      Login
                     </button>
-                    {error && <div className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32" style={{fontColor:"red"}}>{error}</div>}
+                    {/* {error && <div className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32" style={{fontColor:"red"}}>{error}</div>} */}
                   </div>
                  
                   <h6 className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">

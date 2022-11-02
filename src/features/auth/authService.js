@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const API_URL = '';
+const API_URL = 'https://cc65-185-237-231-207.eu.ngrok.io/user/signup/local';
 
 //register user 
 const register = async (userData) =>{

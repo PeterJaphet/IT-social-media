@@ -1,5 +1,4 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
-import { buildQueries } from '@testing-library/react';
 import authService from './authService';
 
 // Get User from localStorage
@@ -37,7 +36,7 @@ export const authSlice = createSlice({
             state.isSuccess = false;
         }
     },
-    extraReducers:() => {
+    extraReducers:(builder) => {
         builder 
         .addCase(register.pending, (state)=>{
             state.isLoading = true
