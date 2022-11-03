@@ -196,7 +196,7 @@ const Register = () => {
           <div
             className="col-xl-6 d-none d-xl-block p-0 vh-110 bg-image-cover bg-no-repeat"
             style={{
-              backgroundImage: `url("https://i.ibb.co/2nXTr8V/800-emu-university-new-horizons.png")`,
+              backgroundImage: `url("https://i.ibb.co/JBy8jDQ/Untitled-design.png")`,
             }}
           ></div>
           <div className="card shadow-none border-0 ms-auto me-auto login-card">
