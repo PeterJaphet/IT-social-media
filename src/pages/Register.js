@@ -3,15 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
-import {Link} from 'react-router-dom'
-
-
+import { Link } from "react-router-dom";
 
 const Register = () => {
-
-
-
-  
   // const [lastName, setLastName] = useState("");
   // const [email, setEmail] = useState("");
   // const [username, setUsername] = useState("");
@@ -24,6 +18,8 @@ const Register = () => {
   // const [confirmPassword, setConfirmPassword] = useState("");
   // const [firstName, setFirstName] = useState("");
 
+  let [userRole] = useState(0);
+
   let [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,7 +28,6 @@ const Register = () => {
     phoneNo: "",
     address: "",
     genderType: "Male",
-    userRole:0,
     dateOfBirth: "",
     password: "",
     confirmPassword: "",
@@ -46,77 +41,103 @@ const Register = () => {
     phoneNo,
     address,
     genderType,
-    userRole,
+
     dateOfBirth,
     password,
     confirmPassword,
   } = formData;
 
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
-  )
+  );
 
-  useEffect(()=>{
-    if(isError) {
+  useEffect(() => {
+    if (isError) {
       toast.error(message);
     }
-    if(isSuccess||user){
-      navigate('login')
+    if (isSuccess || user) {
+      navigate("/");
     }
     dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  },[user,isError,isSuccess,message,navigate,dispatch])
-
-const onChange = (e) => {
+  //Assign data from the Form to the state
+  const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    })
+    }));
+  };
+
+  // const handlePhone = (e) => {
+  //     if (e.target.value.length < 13) {
+  //       var cleaned = ("" + e.target.value).replace(/\W/ig, "");
+
+  //       let normValue = `${cleaned.substring(0, 3)}${
+  //         cleaned.length > 3 ? "-" : ""
+  //       }${cleaned.substring(3, 6)}${
+  //         cleaned.length > 6 ? "-" : ""
+  //       }${cleaned.substring(6, 11)}`;
+
+  //       e.target.value=normValue;
+
+  //   }}
+
+  //Handle Username
+
+  const handleUsername = (e) => {
+    const userRegex = /^([a-zA-Z]+)(\d?)+/g;
+    const userTest = userRegex.test(e.target.value);
+    if (!userTest) toast.warning("Invalid Username");
+  };
+
+  //Handle Email
+
+  const handleEmail = (e) => {
+    const studentRegex = /^(\d{6,8})@(emu\.edu\.tr)$/;
+    const instructorRegex = /^([a-zA-Z]+\.[a-zA-Z\d?]+)@(emu\.edu\.tr)$/;
+    if (
+      !studentRegex.test(e.target.value) &&
+      !instructorRegex.test(e.target.value)
     )
-  }
+      toast.warning("Invalid Email Address");
 
-// const handlePhone = (e) => {
-//     if (e.target.value.length < 13) {
-//       var cleaned = ("" + e.target.value).replace(/\W/ig, "");
+    console.log(studentRegex.test(e.target.value));
+    console.log(instructorRegex.test(e.target.value));
+  };
 
-//       let normValue = `${cleaned.substring(0, 3)}${
-//         cleaned.length > 3 ? "-" : ""
-//       }${cleaned.substring(3, 6)}${
-//         cleaned.length > 6 ? "-" : ""
-//       }${cleaned.substring(6, 11)}`;
+  // Handle Password
+  const handlePassword = (e) => {
+    const passRegex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    if (!passRegex.test(e.target.value)) toast.warning("Invalid Password");
+  };
 
-//       e.target.value=normValue;
-    
-//   }}
-
-// const handleGender = (e) => {
-//   if(e.target.value==="Male"){
-    
-//     parseInt(e.target.value);
-//     e.target.value=1;
-//   }
-//   else{
-//     e.target.value=2
-//   }
-//   console.log(e.target.value)
-// }
+  // Handle onSubmit Form
   const onSubmit = (e) => {
     e.preventDefault();
-    if(genderType==="Male"){
-    
+    if (genderType === "Male") {
       parseInt(genderType);
-      genderType=1;
+      genderType = 1;
     }
-    if(genderType==="Female"){
+    if (genderType === "Female") {
       parseInt(genderType);
-      genderType=2
+      genderType = 2;
     }
-    console.log(genderType)
+    console.log(genderType);
+    const studentRegex = /^(\d{6,8})@(emu\.edu\.tr)$/;
+    const instructorRegex = /^([a-zA-Z]+\.[a-zA-Z\d?]+)@(emu\.edu\.tr)$/;
 
-    
+    if (studentRegex.test(email)) {
+      userRole = 1;
+      console.log(studentRegex.test(email));
+    }
+    if (instructorRegex.test(email)) {
+      userRole = 2;
+      console.log(instructorRegex.test(email));
+    }
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
@@ -132,12 +153,16 @@ const onChange = (e) => {
         userRole,
         dateOfBirth,
         password,
-        confirmPassword
+        confirmPassword,
       };
       console.log(userData);
       dispatch(register(userData));
     }
   };
+
+  if (isLoading) {
+    toast.success("Loading");
+  }
 
   return (
     <Fragment>
@@ -189,8 +214,6 @@ const onChange = (e) => {
                     name="firstName"
                     value={firstName}
                     onChange={onChange}
-                    
-                    
                   />
                 </div>
 
@@ -203,7 +226,6 @@ const onChange = (e) => {
                     name="lastName"
                     onChange={onChange}
                     value={lastName}
-                    
                   />
                 </div>
 
@@ -216,7 +238,7 @@ const onChange = (e) => {
                     name="email"
                     onChange={onChange}
                     value={email}
-                    
+                    onBlur={handleEmail}
                   />
                 </div>
 
@@ -227,9 +249,18 @@ const onChange = (e) => {
                     className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
                     placeholder="Username"
                     name="username"
-                    onChange={onChange}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    onFocus={(e) => {
+                      toast.info(
+                        "Username should be more than 3 characters and should not start with a number"
+                      );
+                    }}
+                    onBlur={(e) => {
+                      handleUsername(e);
+                    }}
                     value={username}
-                    
                   />
                 </div>
 
@@ -240,11 +271,11 @@ const onChange = (e) => {
                     className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
                     placeholder="Phone Number"
                     name="phoneNo"
-                    onChange={(e)=>{onChange(e)}}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
                     // ; handlePhone(e)
                     value={phoneNo}
-                   
-                    
                   />
                 </div>
 
@@ -257,59 +288,74 @@ const onChange = (e) => {
                     name="address"
                     onChange={onChange}
                     value={address}
-                    
                   />
                 </div>
 
-                  <div className="form-group icon-input mb-3">
-                    <i className="font-sm ti-calendar text-grey-500 pe-0"></i>
-                    <input
-                      type="text"
-                      name="dateOfBirth"
-                      className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
-                      placeholder="Date of Birth"                     
+                <div className="form-group icon-input mb-3">
+                  <i className="font-sm ti-calendar text-grey-500 pe-0"></i>
+                  <input
+                    type="text"
+                    name="dateOfBirth"
+                    className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
+                    placeholder="Date of Birth"
                     onChange={onChange}
                     value={dateOfBirth}
-                    onFocus={(e) => e.target.type='date'}
-                    onBlur={(e) => e.target.type='text'}
-                    />
-                  </div>
+                    onFocus={(e) => {
+                      e.target.type = "date";
+                      e.target.max = "2010-01-01";
+                    }}
+                    onBlur={(e) => (e.target.type = "text")}
+                  />
+                </div>
 
-                  <div className="form-control mb-3">
-                    <select className="form-select style2-input text-grey-900 font-x fw-400"
+                <div className="form-control mb-3">
+                  <select
+                    className="form-select style2-input text-grey-900 font-x fw-400"
                     name="genderType"
-                    onChange={(e)=>{onChange(e);}}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
                     value={genderType}
-                    // onHover={(e) => e.target.type='text'}
                     placeholder="Select Gender"
-                    >
-                      <option name="Male" value="Male">Male</option>
-                      <option name="Female" value="Female">Female</option>
-                    </select>
-                  </div>
+                  >
+                    <option name="Male" value="Male">
+                      Male
+                    </option>
+                    <option name="Female" value="Female">
+                      Female
+                    </option>
+                  </select>
+                </div>
 
-                  <div className="form-group icon-input mb-3">
-                    <i className="font-sm ti-lock text-grey-500 pe-0"></i>
-                    <input
-                      type="Password"
-                      className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
-                      placeholder="Password"
-                      name="password"
+                <div className="form-group icon-input mb-3">
+                  <i className="font-sm ti-lock text-grey-500 pe-0"></i>
+                  <input
+                    type="Password"
+                    className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
+                    placeholder="Password"
+                    name="password"
                     onChange={onChange}
                     value={password}
-                    />
-                  </div>
-                  <div className="form-group icon-input mb-1">
-                    <input
-                      type="Password"
-                      className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
-                      placeholder="Confirm Password"
-                      name="confirmPassword"
+                    onFocus={(e) => {
+                      toast.info(
+                        "Password should have at least 8 characters, one UpperCase, one LowerCase and a special character eg '@,!,$'"
+                      );
+                    }}
+                    onBlur={handlePassword}
+                  />
+                </div>
+                <div className="form-group icon-input mb-1">
+                  <input
+                    type="Password"
+                    className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
                     onChange={onChange}
                     value={confirmPassword}
-                    />
-                    <i className="font-sm ti-lock text-grey-500 pe-0"></i>
-                  </div>
+                    // onBlur={handleMatch}
+                  />
+                  <i className="font-sm ti-lock text-grey-500 pe-0"></i>
+                </div>
 
                 <div className="form-check text-left mb-3">
                   <input
@@ -321,24 +367,26 @@ const onChange = (e) => {
                     Accept Term and Conditions
                   </label>
                 </div>
-              
 
-              <div className="col-sm-12 ps-0 text-left">
-                <div className="form-group mb-1">
-                  <button type = "submit" className="btn-group btn-dark form-control text-center style2-input fw-600 p-0">
-                    <Link className="text-center text-white" to="/register">
-                      SIGN UP
+                <div className="col-sm-12 ps-0 text-left">
+                  <div className="form-group mb-1">
+                    <button
+                      type="submit"
+                      className="btn-group btn-dark form-control text-center style2-input fw-600 p-0"
+                    >
+                      <Link className="text-center text-white" to="/register">
+                        SIGN UP
+                      </Link>
+                    </button>
+                  </div>
+
+                  <h6 className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">
+                    Already have account{" "}
+                    <Link to="/login" className="fw-700 ms-1">
+                      Login
                     </Link>
-                  </button>
+                  </h6>
                 </div>
-                
-                <h6 className="text-grey-500 font-xsss fw-500 mt-0 mb-0 lh-32">
-                  Already have account{" "}
-                  <Link to="/login" className="fw-700 ms-1">
-                    Login
-                  </Link>
-                </h6>
-              </div>
               </form>
             </div>
           </div>
