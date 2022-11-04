@@ -4,22 +4,10 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
+import './register.css';
+
 
 const Register = () => {
-  // const [lastName, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [username, setUsername] = useState("");
-  // const [phoneNo, setPhoneNo] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [genderType, setGenderType] = useState(0);
-  // const [userRole, setUserRole] = useState(0);
-  // const [dateOfBirth, setDateOfBirth] = useState("");
-  // const [password, setPassword] = useState = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-  // const [firstName, setFirstName] = useState("");
-
-  let [userRole] = useState(0);
-
   let [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -33,6 +21,9 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
   let {
     firstName,
     lastName,
@@ -41,11 +32,12 @@ const Register = () => {
     phoneNo,
     address,
     genderType,
-
     dateOfBirth,
     password,
     confirmPassword,
   } = formData;
+
+  let [userRole] = useState(0);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,60 +56,70 @@ const Register = () => {
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   //Assign data from the Form to the state
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+
+    // setFormErrors(validateForm(formData));
+  };
+  const handleError = () => {
+    setFormErrors(validateForm(formData));
+    setIsSubmit(true);
   };
 
-  // const handlePhone = (e) => {
-  //     if (e.target.value.length < 13) {
-  //       var cleaned = ("" + e.target.value).replace(/\W/ig, "");
-
-  //       let normValue = `${cleaned.substring(0, 3)}${
-  //         cleaned.length > 3 ? "-" : ""
-  //       }${cleaned.substring(3, 6)}${
-  //         cleaned.length > 6 ? "-" : ""
-  //       }${cleaned.substring(6, 11)}`;
-
-  //       e.target.value=normValue;
-
-  //   }}
-
-  //Handle Username
-
-  const handleUsername = (e) => {
+  const validateForm = (values) => {
+    const errors = {};
     const userRegex = /^([a-zA-Z]+)(\d?)+/g;
-    const userTest = userRegex.test(e.target.value);
-    if (!userTest) toast.warning("Invalid Username");
-  };
-
-  //Handle Email
-
-  const handleEmail = (e) => {
-    const studentRegex = /^(\d{6,8})@(emu\.edu\.tr)$/;
-    const instructorRegex = /^([a-zA-Z]+\.[a-zA-Z\d?]+)@(emu\.edu\.tr)$/;
-    if (
-      !studentRegex.test(e.target.value) &&
-      !instructorRegex.test(e.target.value)
-    )
-      toast.warning("Invalid Email Address");
-
-    console.log(studentRegex.test(e.target.value));
-    console.log(instructorRegex.test(e.target.value));
-  };
-
-  // Handle Password
-  const handlePassword = (e) => {
+    const studentRegex =
+      /^(\d{6,8})@(([eE][mM][uU])\.([eE][dD][uU])\.([tT][rR]))$/;
+    const instructorRegex =
+      /^([a-zA-Z]+\.[a-zA-Z\d?]+)@(([eE][mM][uU])\.([eE][dD][uU])\.([tT][rR]))$/;
     const passRegex =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-    if (!passRegex.test(e.target.value)) toast.warning("Invalid Password");
+    const phoneRegex = /^\+[0-9]{10,14}$/;
+
+    // Handle Username
+
+    const userTest = userRegex.test(values.username);
+    if (!userTest && values.username !== "") {
+      errors.username = "Invalid Username !";
+    }
+
+    //Handle Email
+    if (
+      !studentRegex.test(values.email) &&
+      !instructorRegex.test(values.email) &&
+      values.email !== ""
+    ) {
+      errors.email = "Invalid Email Address !";
+    }
+
+    //Handle PhoneNumber
+    if (!phoneRegex.test(values.phoneNo) && values.phoneNo !== "") {
+      errors.phoneNo = "Invalid Phone Number !";
+    }
+
+    // Handle Password
+
+    if (!passRegex.test(values.password) && values.password !== "") {
+      errors.password = "Invalid Password !";
+    }
+
+    // Handle matching Passwords
+    // else if (values.confirmPassword !== values.password) {
+    //   errors.confirmPassword = "Passwords do not match !";
+    // }
+    return errors;
   };
 
   // Handle onSubmit Form
   const onSubmit = (e) => {
     e.preventDefault();
+    setFormErrors(validateForm(formData));
+    setIsSubmit(true);
     if (genderType === "Male") {
       parseInt(genderType);
       genderType = 1;
@@ -126,22 +128,23 @@ const Register = () => {
       parseInt(genderType);
       genderType = 2;
     }
-    console.log(genderType);
-    const studentRegex = /^(\d{6,8})@(emu\.edu\.tr)$/;
-    const instructorRegex = /^([a-zA-Z]+\.[a-zA-Z\d?]+)@(emu\.edu\.tr)$/;
+    const studentRegex =
+      /^(\d{6,8})@(([eE][mM][uU])\.([eE][dD][uU])\.([tT][rR]))$/;
+    const instructorRegex =
+      /^([a-zA-Z]+\.[a-zA-Z\d?]+)@(([eE][mM][uU])\.([eE][dD][uU])\.([tT][rR]))$/;
 
     if (studentRegex.test(email)) {
       userRole = 1;
-      console.log(studentRegex.test(email));
+  //    console.log(studentRegex.test(email));
     }
     if (instructorRegex.test(email)) {
       userRole = 2;
-      console.log(instructorRegex.test(email));
+   //   console.log(instructorRegex.test(email));
     }
-
-    if (password !== confirmPassword) {
+       if (password !== confirmPassword) {
       toast.error("Passwords do not match");
-    } else {
+    } 
+     else if (Object.keys(formErrors).length === 0 && isSubmit) {
       const userData = {
         firstName,
         lastName,
@@ -157,8 +160,35 @@ const Register = () => {
       };
       console.log(userData);
       dispatch(register(userData));
-    }
+     }
+
+    // if (password !== confirmPassword) {
+    //   toast.error("Passwords do not match");
+    //   check = false;
+    // } else {
+    //   const userData = {
+    //     firstName,
+    //     lastName,
+    //     email,
+    //     username,
+    //     phoneNo,
+    //     address,
+    //     genderType,
+    //     userRole,
+    //     dateOfBirth,
+    //     password,
+    //     confirmPassword,
+    //   };
+    //   console.log(userData);
+    //   dispatch(register(userData));
+    // }
   };
+
+  // useEffect(() => {
+  //   if (Object.keys(formErrors).length === 0 && isSubmit) {
+  //     console.log(formData);
+  //   }
+  // }, [formErrors]);
 
   if (isLoading) {
     toast.success("Loading");
@@ -213,7 +243,10 @@ const Register = () => {
                     placeholder="Firstname"
                     name="firstName"
                     value={firstName}
-                    onChange={onChange}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    required
                   />
                 </div>
 
@@ -226,9 +259,10 @@ const Register = () => {
                     name="lastName"
                     onChange={onChange}
                     value={lastName}
+                    required
                   />
                 </div>
-
+                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.email}</p>
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-email text-grey-500 pe-0"></i>
                   <input
@@ -236,12 +270,15 @@ const Register = () => {
                     className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
                     placeholder="Student / Staff Email Address"
                     name="email"
-                    onChange={onChange}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
                     value={email}
-                    onBlur={handleEmail}
+                    onBlur={handleError}
+                    required
                   />
                 </div>
-
+                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.username}</p>
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-user text-grey-500 pe-0"></i>
                   <input
@@ -249,21 +286,19 @@ const Register = () => {
                     className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
                     placeholder="Username"
                     name="username"
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
+                    onChange={(e) => onChange(e)}
                     onFocus={(e) => {
                       toast.info(
                         "Username should be more than 3 characters and should not start with a number"
                       );
                     }}
-                    onBlur={(e) => {
-                      handleUsername(e);
-                    }}
                     value={username}
+                    onBlur={handleError}
+                    required
                   />
                 </div>
-
+                
+                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.phoneNo}</p>
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-mobile text-grey-500 pe-0"></i>
                   <input
@@ -271,11 +306,17 @@ const Register = () => {
                     className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
                     placeholder="Phone Number"
                     name="phoneNo"
+                    onFocus={(e) => {
+                      toast.info(
+                        "Phone Number should start with country code e.g +90, +234"
+                      );
+                    }}
                     onChange={(e) => {
                       onChange(e);
                     }}
-                    // ; handlePhone(e)
+                    onBlur={handleError}
                     value={phoneNo}
+                    required
                   />
                 </div>
 
@@ -302,9 +343,10 @@ const Register = () => {
                     value={dateOfBirth}
                     onFocus={(e) => {
                       e.target.type = "date";
-                      e.target.max = "2010-01-01";
+                      e.target.max = "2006-12-31";
                     }}
                     onBlur={(e) => (e.target.type = "text")}
+                    required
                   />
                 </div>
 
@@ -326,7 +368,7 @@ const Register = () => {
                     </option>
                   </select>
                 </div>
-
+                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.password}</p>
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-lock text-grey-500 pe-0"></i>
                   <input
@@ -341,9 +383,11 @@ const Register = () => {
                         "Password should have at least 8 characters, one UpperCase, one LowerCase and a special character eg '@,!,$'"
                       );
                     }}
-                    onBlur={handlePassword}
+                    onBlur={handleError}
+                    required
                   />
                 </div>
+                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.confirmPassword}</p>
                 <div className="form-group icon-input mb-1">
                   <input
                     type="Password"
@@ -352,20 +396,20 @@ const Register = () => {
                     name="confirmPassword"
                     onChange={onChange}
                     value={confirmPassword}
-                    // onBlur={handleMatch}
+                    required
                   />
                   <i className="font-sm ti-lock text-grey-500 pe-0"></i>
                 </div>
 
                 <div className="form-check text-left mb-3">
-                  <input
+                  {/* <input
                     type="checkbox"
                     className="form-check-input mt-2"
                     id="exampleCheck2"
                   />
                   <label className="form-check-label font-xsss text-grey-500">
                     Accept Term and Conditions
-                  </label>
+                  </label> */}
                 </div>
 
                 <div className="col-sm-12 ps-0 text-left">
