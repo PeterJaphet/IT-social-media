@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
-import './register.css';
-
+import "./register.css";
+import Spinner from "../components/spinner";
 
 const Register = () => {
   let [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ const Register = () => {
       toast.error(message);
     }
     if (isSuccess || user) {
-      navigate("/");
+      navigate("/home");
     }
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
@@ -62,8 +62,6 @@ const Register = () => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-
-    // setFormErrors(validateForm(formData));
   };
   const handleError = () => {
     setFormErrors(validateForm(formData));
@@ -107,11 +105,6 @@ const Register = () => {
     if (!passRegex.test(values.password) && values.password !== "") {
       errors.password = "Invalid Password !";
     }
-
-    // Handle matching Passwords
-    // else if (values.confirmPassword !== values.password) {
-    //   errors.confirmPassword = "Passwords do not match !";
-    // }
     return errors;
   };
 
@@ -135,16 +128,13 @@ const Register = () => {
 
     if (studentRegex.test(email)) {
       userRole = 1;
-  //    console.log(studentRegex.test(email));
     }
     if (instructorRegex.test(email)) {
       userRole = 2;
-   //   console.log(instructorRegex.test(email));
     }
-       if (password !== confirmPassword) {
+    if (password !== confirmPassword) {
       toast.error("Passwords do not match");
-    } 
-     else if (Object.keys(formErrors).length === 0 && isSubmit) {
+    } else if (Object.keys(formErrors).length === 0 && isSubmit) {
       const userData = {
         firstName,
         lastName,
@@ -160,42 +150,17 @@ const Register = () => {
       };
       console.log(userData);
       dispatch(register(userData));
-     }
-
-    // if (password !== confirmPassword) {
-    //   toast.error("Passwords do not match");
-    //   check = false;
-    // } else {
-    //   const userData = {
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     username,
-    //     phoneNo,
-    //     address,
-    //     genderType,
-    //     userRole,
-    //     dateOfBirth,
-    //     password,
-    //     confirmPassword,
-    //   };
-    //   console.log(userData);
-    //   dispatch(register(userData));
-    // }
+    }
   };
 
-  // useEffect(() => {
-  //   if (Object.keys(formErrors).length === 0 && isSubmit) {
-  //     console.log(formData);
-  //   }
-  // }, [formErrors]);
-
   if (isLoading) {
-    toast.success("Loading");
+    return <Spinner />;
   }
 
   return (
+    
     <Fragment>
+      {!user && 
       <div className="main-wrap">
         <div className="nav-header bg-transparent shadow-none border-0">
           <div className="nav-top w-100">
@@ -213,12 +178,12 @@ const Register = () => {
             >
               LOGIN
             </a>
-            <a
+            {/* <a
               href="/register"
               className="header-btn d-none d-lg-block bg-current fw-500 text-white font-xsss p-3 ms-2 w100 text-center lh-20 rounded-xl"
             >
               REGISTER
-            </a>
+            </a> */}
           </div>
         </div>
 
@@ -262,7 +227,16 @@ const Register = () => {
                     required
                   />
                 </div>
-                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.email}</p>
+                <p
+                  style={{
+                    color: "red",
+                    fontFamily: "Lucida",
+                    margin: "0px",
+                    fontSize: "16px",
+                  }}
+                >
+                  {formErrors.email}
+                </p>
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-email text-grey-500 pe-0"></i>
                   <input
@@ -278,7 +252,16 @@ const Register = () => {
                     required
                   />
                 </div>
-                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.username}</p>
+                <p
+                  style={{
+                    color: "red",
+                    fontFamily: "Lucida",
+                    margin: "0px",
+                    fontSize: "16px",
+                  }}
+                >
+                  {formErrors.username}
+                </p>
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-user text-grey-500 pe-0"></i>
                   <input
@@ -297,8 +280,17 @@ const Register = () => {
                     required
                   />
                 </div>
-                
-                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.phoneNo}</p>
+
+                <p
+                  style={{
+                    color: "red",
+                    fontFamily: "Lucida",
+                    margin: "0px",
+                    fontSize: "16px",
+                  }}
+                >
+                  {formErrors.phoneNo}
+                </p>
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-mobile text-grey-500 pe-0"></i>
                   <input
@@ -368,7 +360,16 @@ const Register = () => {
                     </option>
                   </select>
                 </div>
-                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.password}</p>
+                <p
+                  style={{
+                    color: "red",
+                    fontFamily: "Lucida",
+                    margin: "0px",
+                    fontSize: "16px",
+                  }}
+                >
+                  {formErrors.password}
+                </p>
                 <div className="form-group icon-input mb-3">
                   <i className="font-sm ti-lock text-grey-500 pe-0"></i>
                   <input
@@ -387,7 +388,16 @@ const Register = () => {
                     required
                   />
                 </div>
-                <p style={{color: "red",fontFamily: "Lucida",margin:"0px",fontSize:"16px"}}>{formErrors.confirmPassword}</p>
+                <p
+                  style={{
+                    color: "red",
+                    fontFamily: "Lucida",
+                    margin: "0px",
+                    fontSize: "16px",
+                  }}
+                >
+                  {formErrors.confirmPassword}
+                </p>
                 <div className="form-group icon-input mb-1">
                   <input
                     type="Password"
@@ -435,7 +445,7 @@ const Register = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </Fragment>
   );
 };

@@ -54,8 +54,11 @@ function App() {
       <>
         <BrowserRouter>
               <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Login />} />
               <Route path="home" element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="settings" element={<Settings />} />
                    
 
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultbadge`} component={Badge}/>
@@ -63,7 +66,7 @@ function App() {
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultstorie`} component={Storie}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultemailbox`} component={Email}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultemailopen`} component={Emailopen}/>
-                    <Route path="defaultsettings" element={<Settings />} />
+                    
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultvideo`} component={Videos}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultanalytics`} component={Analytics}/> 
                     <Route exact path={`${process.env.PUBLIC_URL}/accountinformation`} component={Account}/>
@@ -74,8 +77,7 @@ function App() {
                     <Route exact path={`${process.env.PUBLIC_URL}/payment`} component={Payment}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/defaultnotification`} component={Notification}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/helpbox`} component={Helpbox}/>
-                    <Route path="login" element={<Login />} />
-                    <Route path="register" element={<Register />} />
+                    
                     <Route exact path={`${process.env.PUBLIC_URL}/forgot`} component={Forgot}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/notfound`} component={Notfound}/>
 
