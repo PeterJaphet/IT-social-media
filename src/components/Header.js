@@ -70,7 +70,7 @@ class Header extends Component {
                 </div>
                 <Link to="/defaultmessage" className="p-2 text-center ms-3 menu-icon chat-active-btn"><i className="feather-message-square font-xl text-current"></i></Link>
                 <Darkbutton />
-                <Link to="/settings" className="p-0 ms-3 menu-icon"><img src="assets/images/user.png" alt="user" className="w40 mt--1" /></Link>
+                <Link to="/settings" className="p-0 ms-3 menu-icon"><i className="w40 mt--1"></i></Link>
 
                 <nav className={`navigation scroll-bar ${navClass}`}>
                     <div className="container ps-0 pe-0">
