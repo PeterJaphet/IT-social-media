@@ -44,6 +44,7 @@ const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userData ={ email,password};
+    console.log(user)
     console.log(userData);
     dispatch(login(userData))
   };
@@ -54,6 +55,9 @@ const dispatch = useDispatch();
 
   return (
     <Fragment>
+      {
+        !user &&
+     
       <div className="main-wrap">
         <div className="nav-header bg-transparent shadow-none border-0">
           <div className="nav-top w-100">
@@ -156,6 +160,7 @@ const dispatch = useDispatch();
           </div>
         </div>
       </div>
+}
     </Fragment>
   );
 };
