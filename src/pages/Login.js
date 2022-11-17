@@ -1,21 +1,57 @@
-import React, { Fragment } from "react";
-import { useState } from "react";
+import { useState,useEffect,Fragment } from "react";
 import { Link } from "react-router-dom";
-// import {useLogin} from '../hooks/useLogin';
-import bg_auth from "../assets/images/bg_auth.png";
-import "../assets/css/Login.css";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { login, reset } from "../features/auth/authSlice";
+import Spinner from "../components/spinner";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const {login,isLoading,error} = useLogin();
+
+  
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  })
+
+  const { email, password } = formData
+
+const onChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({ ...formData, [name]: value });
+};
+
+const navigate = useNavigate();
+const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate("/home");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(Login);
-    // await login(email, password);
+    const userData ={ email,password};
+    console.log(userData);
+    dispatch(login(userData))
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <Fragment>
       <div className="main-wrap">
@@ -31,9 +67,9 @@ const Login = () => {
 
             <Link
               to="/login"
-              className="header-btn d-none d-lg-block bg-dark fw-500 text-white font-xsss p-3 ms-auto w100 text-center lh-20 rounded-xl"
+              className="header-btn d-none d-lg-block  fw-500 text-white font-xsss p-3 ms-auto w100 text-center lh-20 rounded-xl"
             >
-              Login
+             
             </Link>
             <Link
               to="/register"
@@ -44,7 +80,12 @@ const Login = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"></div>
+          <div
+            className="col-xl-5 d-none d-xl-block p-0 vh-100 bg-image-cover bg-no-repeat"
+            style={{
+              backgroundImage: `url("https://i.ibb.co/2nXTr8V/800-emu-university-new-horizons.png")`,
+            }}
+          ></div>
           <div className="col-xl-7 vh-100 align-items-center d-flex bg-white rounded-3 overflow-hidden">
             <div className="card shadow-none border-0 ms-auto me-auto login-card">
               <div className="card-body rounded-0 text-left">
@@ -58,9 +99,11 @@ const Login = () => {
                     <input
                       type="email"
                       className="style2-input ps-5 form-control text-grey-900 font-xsss fw-600"
-                      placeholder="Your Email Address"
-                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Student / Staff Email Address"
+                      name="email"
+                      onChange={onChange}
                       value={email}
+                      required
                     />
                   </div>
                   <div className="form-group icon-input mb-1">
@@ -68,8 +111,10 @@ const Login = () => {
                       type="Password"
                       className="style2-input ps-5 form-control text-grey-900 font-xss ls-3"
                       placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="password"
+                      onChange={onChange}
                       value={password}
+                      required
                     />
                     <i className="font-sm ti-lock text-grey-500 pe-0"></i>
                   </div>
