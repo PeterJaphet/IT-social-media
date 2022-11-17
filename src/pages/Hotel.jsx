@@ -1,4 +1,4 @@
-import React, { Component , Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import Header from '../components/Header';
 import Leftnav from '../components/Leftnav';
 import Rightchat from '../components/Rightchat';
@@ -16,43 +16,43 @@ const hotelList = [
         imageUrl: 'product.png',
         title: 'Montana Hotel',
         location: '323 Geldenfe Ave Park, Flodia City',
-        price:'320',
-        feature:'feature',
+        price: '320',
+        feature: 'feature',
     },
     {
         imageUrl: 'product.png',
         title: 'Himalayan Wind Horse',
         location: '323 Geldenfe Ave Park, Flodia City',
-        price:'140',
-        feature:'',
+        price: '140',
+        feature: '',
     },
     {
         imageUrl: 'product.png',
         title: 'Hotel Sonar Bangla',
         location: '323 Geldenfe Ave Park, Flodia City',
-        price:'160',
-        feature:'feature',
+        price: '160',
+        feature: 'feature',
     },
     {
         imageUrl: 'product.png',
         title: 'House Pool Party',
         location: '323 Geldenfe Ave Park, Flodia City',
-        price:'350',
-        feature:'feature',
+        price: '350',
+        feature: 'feature',
     },
     {
         imageUrl: 'product.png',
         title: 'Silver Star Boutique',
         location: '323 Geldenfe Ave Park, Flodia City',
-        price:'520',
-        feature:'',
+        price: '520',
+        feature: '',
     },
     {
         imageUrl: 'product.png',
         title: 'Crown Retreat Hotel',
         location: '323 Geldenfe Ave Park, Flodia City',
-        price:'99',
-        feature:'feature',
+        price: '99',
+        feature: 'feature',
     },
 ]
 
@@ -65,22 +65,22 @@ class Hotel extends Component {
         },
         zoom: 11
     };
-    
+
     render() {
         return (
-            <Fragment> 
+            <Fragment>
                 <Header />
                 <Leftnav />
                 <Rightchat />
 
                 <div className="main-content right-chat-active">
                     <div className="middle-sidebar-bottom">
-                        <div className="middle-sidebar-left pe-0" style={{maxWidth: "100%"}}>
+                        <div className="middle-sidebar-left pe-0" style={{ maxWidth: "100%" }}>
                             <div className="row">
                                 <div className="col-xl-6 chat-left scroll-bar">
                                     <Pagetitle title="Hotels" />
                                     <div className="row ps-2 pe-2">
-                                        {hotelList.map((value , index) => (
+                                        {hotelList.map((value, index) => (
 
                                             <div key={index} className="col-lg-6 col-md-6 col-sm-6 mb-3 pe-2 ps-2">
                                                 <div className="card w-100 p-0 hover-card shadow-xss border-0 rounded-3 overflow-hidden me-1">
@@ -113,21 +113,21 @@ class Hotel extends Component {
                                         ))}
                                     </div>
 
-                                    
+
                                 </div>
 
                                 <div className="col-xl-6 ps-0 d-none d-xl-block">
                                     <div className="card w-100 border-0 shadow-none rounded-3 border-0 mb-4 overflow-hidden ">
                                         <div style={{ height: '86vh', width: '100%' }}>
                                             <GoogleMapReact
-                                            defaultCenter={this.props.center}
-                                            defaultZoom={this.props.zoom}
+                                                defaultCenter={this.props.center}
+                                                defaultZoom={this.props.zoom}
                                             >
-                                            <AnyReactComponent
-                                                lat={59.955413}
-                                                lng={30.337844}
-                                                text="My Marker"
-                                            />
+                                                <AnyReactComponent
+                                                    lat={59.955413}
+                                                    lng={30.337844}
+                                                    text="My Marker"
+                                                />
                                             </GoogleMapReact>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@ class Hotel extends Component {
                 </div>
 
                 <Popupchat />
-                <Appfooter /> 
+                <Appfooter />
             </Fragment>
         );
     }
