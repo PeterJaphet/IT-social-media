@@ -1,19 +1,21 @@
-import { Fragment } from "react";
+import { Fragment , useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {  useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
-
+import { useSelector} from "react-redux";
 import Header from "../components/Header";
 import Leftnav from "../components/Leftnav";
 import Rightchat from "../components/Rightchat";
 import Appfooter from "../components/Appfooter";
 import Popupchat from "../components/Popupchat";
+import { createPost } from "../features/auth/post/postSlice";
 
 const Settings = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onLogout = () => {
+
     dispatch(logout());
     dispatch(reset());
     navigate("/");
