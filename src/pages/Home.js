@@ -26,20 +26,28 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 const Home =()=> {
+    // const [userName, setUserName] = useState();
+    // useEffect(() => {
+    //     const user = JSON.parse(localStorage.getItem("user"));
+    //      if (user) {
+    //        setUserName(user.message.data.firstName+" "+user.message.data.lastName);
+    //      }
+    //    }, []);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    
 
-    const {postItems,isLoading,isError,message,isSuccess} = useSelector((state)=>state.post)
+    const {postItems,  isLoading,isGetPostError,message,isGetPostSuccess} = useSelector((state)=>state.post);
     useEffect(() => {
-        if(isSuccess){
-            toast.success("Posted succesfully")
-        }
-        dispatch(getPosts())
-        return()=>{
-            dispatch(reset())
-        }
-    },[dispatch,isSuccess]);
+       dispatch(getPosts())
+        // return()=>{
+        //     dispatch(reset())
+        // }
+    },[dispatch]);
+
+
 
 
 
@@ -60,11 +68,13 @@ const Home =()=> {
                                     {postItems && postItems.map((post)=>{
                                         return(
                                         <Postview 
-                                        
-                                        key={post.message.data._id}
-                                        userId={post.message.data._id}
-                                        text={post.message.data.text}
-                                        uploadUrl={post.message.data.uploadUrl}
+                                        key={post.post._id}
+                                        // userId={post.post.userId}
+                                        text={post.post.text}
+                                        uploadUrl={post.post.uploadUrl}
+                                        createdAt = {post.post.createdAt}
+                                        avater="user.png"
+                                        username = {post.user.firstName+" "+post.user.lastName}
                                         />
                                         )
                                     })

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import imageCompression from "browser-image-compression";
 import { createPost, reset } from "../features/auth/post/postSlice";
 import Load from "../components/Load";
+import { getPosts} from "../features/auth/post/postSlice";
 
 function Createpost() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,7 @@ function Createpost() {
   const [userData, setUserData] = useState([]);
   const [userId, setUserId] = useState();
   const [disable, setDisable] = useState(false);
+  
 
   const dispatch = useDispatch();
   const {isLoading, isError, isSuccess, message } = useSelector(
@@ -28,9 +30,11 @@ function Createpost() {
  // Get Data from local storage
   useEffect(() => {
    const user = JSON.parse(localStorage.getItem("user"));
+   console.log(user);
     if (user) {
-      setUserData(user.message.data);
-      setUserId(user.message.data._id);
+      setUserData(user.message.data.user);
+      setUserId(user.message.data.user._id);
+      console.log(userId)
     }
   }, []);
 
@@ -40,8 +44,11 @@ function Createpost() {
     }
     if (isSuccess) {
       toast.success("posted Successfully");
+      dispatch(getPosts())
+      dispatch(reset())
+    
     }
-  }, [isSuccess]);
+  }, [isSuccess,isError,dispatch]);
 
   //handle Upload
   const handleFileSelection = (e) => {

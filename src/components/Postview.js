@@ -1,7 +1,16 @@
 import React from "react";
 import { useState } from "react";
 
+// import TimeAgo from "javascript-time-ago";
+// import en from 'javascript-time-ago/locale/en'
+
+//date fns
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+
+
 function Postview  (props)  {
+  //TimeAgo.addLocale(en);
+ // const timeAgo = new TimeAgo("en-US");
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
@@ -18,7 +27,7 @@ function Postview  (props)  {
       <div className="card-body p-0 d-flex">
         <figure className="avatar me-3">
           <img
-            src={props.uploadUrl}
+            src={`assets/images/${props.avater}`}
             alt="avater"
             className="shadow-sm rounded-circle w45"
           />
@@ -26,10 +35,11 @@ function Postview  (props)  {
         <h4 className="fw-700 text-grey-900 font-xssss mt-1">
           {" "}
           {}{" "}
-          {"Peter Japhet"}{" "}
+          {props.username}{" "}
           <span className="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">
             {" "}
-            {/* {time} */}
+            {console.log(props.createdAt)}
+            {formatDistanceToNow(new Date(props.createdAt), {addSuffix:true})}
           </span>
         </h4>
         <div className="ms-auto pointer">

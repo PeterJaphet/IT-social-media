@@ -50,7 +50,7 @@ const Register = () => {
       toast.error(message);
     }
     if (isSuccess || user) {
-      navigate("/home");
+      navigate("/");
     }
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);

@@ -1,11 +1,13 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
 import postService from './postService';
 
-// const postItems = JSON.parse(localStorage.getItem('postItems'));
+
 
 const initialState = {
     postItems:[],
     isError:false,
+    isGetPostError:false,
+    isGetPostSuccess:false,
     isSuccess:false,
     isLoading:false,
     message:''
@@ -26,12 +28,14 @@ async(postItems,thunkAPI)=>{
 }
 )
 
-//Get user post
 
-export const getPosts = createAsyncThunk('post/followingPost',async(postItems,thunkAPI) => {
+export const getPosts = createAsyncThunk('post/followingPost',async(_,thunkAPI) => { 
+   const user = JSON.parse(localStorage.getItem('user'));
+   console.log(user.message.data.user._id);
     try{
        // const token =thunkAPI.getState.auth.user.message.data.token;
-       return await postService.getPost(postItems.message.data._id)
+       return await postService.getPost(user.message.data.user._id)
+
     }
     catch(error){
         const message = (error.response && error.response.data&&error.response.data.message) || error.message || error.toString();
@@ -55,8 +59,8 @@ export const postSlice = createSlice({
         })
         .addCase(createPost.fulfilled, (state,action)=>{
             state.isLoading = false;
-            state.isSuccess = false;
-            state.postItems.push(action.payload)
+            state.isSuccess = true;
+            // state.postItems.push(action.payload)
         })
         .addCase(createPost.rejected, (state,action)=>{
             state.isLoading = false;
@@ -68,14 +72,15 @@ export const postSlice = createSlice({
             state.isLoading = true;
         })
         .addCase(getPosts.fulfilled, (state,action)=>{
+           // console.log(action.payload.message.data)
             state.isLoading = false;
-            state.isSuccess = false;
-            state.postItems = action.payload
+            state.isGetPostSuccess = true;
+            state.postItems = action.payload.message.data
         })
         .addCase(getPosts.rejected, (state,action)=>{
             state.isLoading = false;
-            state.isError = true;
-            state.isSuccess = false;
+            state.isGetPostError = true;
+            state.isGetPostSuccess = false;
             state.message = action.payload;
         })
 
