@@ -16,8 +16,8 @@ class ProfilecardOne extends Component {
                     <h4 className="font-xsssss text-center text-grey-500 fw-600 ms-2 me-2"><b className="text-grey-900 mb-1 font-xss fw-700 d-inline-block ls-3 text-dark">32k </b> Follow</h4>
                 </div>
                 <div className="card-body d-flex align-items-center justify-content-center ps-4 pe-4 pt-0">
-                    <a href="/defaultmember" className="bg-success p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Add Friend</a>
-                    <a href="/defaultemailbox" className="bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i className="feather-mail font-md"></i></a>
+                    <a href="/member" className="bg-success p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Add Friend</a>
+                    <a href="/emailbox" className="bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i className="feather-mail font-md"></i></a>
                     <a href="/home" className="bg-greylight theme-white-bg btn-round-lg ms-2 rounded-3 text-grey-700"><i className="ti-more font-md"></i></a>
                 </div>
             </div>

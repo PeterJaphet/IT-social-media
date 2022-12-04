@@ -35,6 +35,7 @@ function Createpost() {
       setUserData(user.message.data.user);
       setUserId(user.message.data.user._id);
       console.log(userId)
+      console.log(userData)
     }
   }, []);
 

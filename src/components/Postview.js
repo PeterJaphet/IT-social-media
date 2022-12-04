@@ -1,26 +1,91 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useSelector,useDispatch } from "react-redux";
 
-// import TimeAgo from "javascript-time-ago";
-// import en from 'javascript-time-ago/locale/en'
+import TimeAgo from "javascript-time-ago";
+import en from 'javascript-time-ago/locale/en'
 
 //date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
+import {RiHeartFill,
+        RiHeartLine,
+        RiMessage3Line,
+        RiMessage3Fill,
+        RiMessage,
+        RiShareForward2Line,
+        RiSendPlane2Fill,
+} from 'react-icons/ri'
+
+import { addLove} from "../features/auth/post/postSlice";
+
 
 function Postview  (props)  {
-  //TimeAgo.addLocale(en);
- // const timeAgo = new TimeAgo("en-US");
+  TimeAgo.addLocale(en);
+ const timeAgo = new TimeAgo("en-US");
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
+ // const [loveStatus, setLoveStatus] = useState(false);
+  const [commentStatus, setCommentStatus] = useState(false);
+  const [commentContent, setCommentContent] = useState("");
+  const [sendButtonDisable, setSendButtonDisable] =useState(true);
+  const dispatch = useDispatch();
+
+
+
   const toggleOpen = () => setIsOpen(!isOpen);
   const toggleActive = () => setIsActive(!isActive);
+
 
   //const { user, time, des, avater, postimage, postvideo, id } = this.props;
 
   const menuClass = `${isOpen ? " show" : ""}`;
   const emojiClass = `${isActive ? " active" : ""}`;
+  const [loveStatus, setLoveStatus] = useState(false);
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('likeStatus'));
+    console.log(data);
+    if ( data !== null ) setLoveStatus(JSON.parse(data));
+    
+     },[])
+     
+  useEffect(() => {
+    localStorage.setItem('likeStatus', JSON.stringify(loveStatus))
+    console.log(loveStatus)
+  },[loveStatus])
+
+ 
+
+  
+  function handleLove(){
+
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    // console.log(props.userLike)
+    // console.log(user.message.data.user._id)
+    // console.log(props.likes)
+    
+    if(!props.userLike.includes(user.message.data.user._id)){
+      setLoveStatus(true)
+      dispatch(addLove({postId:props._id,userId:user.message.data.user._id}))
+      console.log(props.userLike)
+      console.log(user.message.data.user._id)
+      console.log(props.likes)
+      
+    }
+    else{
+      console.log(props.userLike)
+      setLoveStatus(false)
+      dispatch(addLove({postId:props._id,userId:user.message.data.user._id}))
+    }
+
+   
+  }
+
+ 
+
 
   return (
     <div className="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-3">
@@ -38,8 +103,9 @@ function Postview  (props)  {
           {props.username}{" "}
           <span className="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">
             {" "}
-            {console.log(props.createdAt)}
-            {formatDistanceToNow(new Date(props.createdAt), {addSuffix:true})}
+            {/* {console.log(props.createdAt)} */}
+            {/* {formatDistanceToNow(new Date(props.createdAt), {addSuffix:true})} */}
+            {timeAgo.format(new Date(props.createdAt).getTime())}
           </span>
         </h4>
         <div className="ms-auto pointer">
@@ -86,44 +152,25 @@ function Postview  (props)  {
           className="emoji-bttn pointer d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2"
           onClick={toggleActive}
         >
-          <i className="feather-thumbs-up text-white bg-primary-gradiant me-1 btn-round-xs font-xss"></i>{" "}
-          <i className="feather-heart text-white bg-red-gradiant me-2 btn-round-xs font-xss"></i>
-          2.8K Like
-        </div>
-        <div className={`emoji-wrap pointer ${emojiClass}`}>
-          <ul className="emojis list-inline mb-0">
-            <li className="emoji list-inline-item">
-              <i className="em em---1"></i>{" "}
-            </li>
-            <li className="emoji list-inline-item">
-              <i className="em em-angry"></i>
-            </li>
-            <li className="emoji list-inline-item">
-              <i className="em em-anguished"></i>{" "}
-            </li>
-            <li className="emoji list-inline-item">
-              <i className="em em-astonished"></i>{" "}
-            </li>
-            <li className="emoji list-inline-item">
-              <i className="em em-blush"></i>
-            </li>
-            <li className="emoji list-inline-item">
-              <i className="em em-clap"></i>
-            </li>
-            <li className="emoji list-inline-item">
-              <i className="em em-cry"></i>
-            </li>
-            <li className="emoji list-inline-item">
-              <i className="em em-full_moon_with_face"></i>
-            </li>
-          </ul>
+          {/* <i className="feather-thumbs-up text-white bg-primary-gradiant me-1 btn-round-xs font-xss"></i>{" "} */}
+          {/* <i className="feather-heart text-white bg-red-gradiant me-2 btn-round-xs font-xss"></i> */}
+          <span 
+             onClick={handleLove}       
+          >
+          {loveStatus ? (<RiHeartFill className="text-danger me-2 btn-round-sm "  />):
+          (<RiHeartLine className="text-danger me-2 btn-round-sm "  />)}
+          </span>
+          <span>{props.userLike.length > 0 ? (props.userLike.length):null}</span>
+          {/* <span>{props.likes}</span>  */}
+        
         </div>
         <a
-          href="/defaultvideo"
+          href="/video"
           className="d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss"
         >
-          <i className="feather-message-circle text-dark text-grey-900 btn-round-sm font-lg"></i>
-          <span className="d-none-xss">22 Comment</span>
+          {/* <i className="feather-message-circle text-dark text-grey-900 btn-round-sm font-lg"></i> */}
+          <span className="d-none-xss">
+            <RiMessage3Line className=" me-2 btn-round-sm "/></span>
         </a>
         <div
           className={`pointer ms-auto d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss ${menuClass}`}

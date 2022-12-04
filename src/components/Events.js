@@ -30,7 +30,7 @@ class Events extends Component {
             <div className="card w-100 shadow-xss rounded-xxl border-0 mb-3">
                 <div className="card-body d-flex align-items-center p-4">
                     <h4 className="fw-700 mb-0 font-xssss text-grey-900">Events</h4>
-                    <a href="/defaultevent" className="fw-600 ms-auto font-xssss text-primary">See all</a>
+                    <a href="/event" className="fw-600 ms-auto font-xssss text-primary">See all</a>
                 </div>
                 {eventsList.map((value , index) => (
                 <div  key={index} className="card-body d-flex pt-0 ps-4 pe-4 pb-3 overflow-hidden">

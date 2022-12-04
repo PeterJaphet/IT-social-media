@@ -18,7 +18,7 @@ import Load from '../components/Load';
 import Profilephoto from '../components/Profilephoto';
 import Spinner from '../components/spinner'
 import { toast } from "react-toastify";
-import { getPosts, reset } from "../features/auth/post/postSlice";
+import { getPosts,updateLike, reset } from "../features/auth/post/postSlice";
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -39,9 +39,10 @@ const Home =()=> {
     const dispatch = useDispatch();
     
 
-    const {postItems,  isLoading,isGetPostError,message,isGetPostSuccess} = useSelector((state)=>state.post);
+    const {postItems,likeItems,  isLoading,isGetPostError,message,isGetPostSuccess} = useSelector((state)=>state.post);
     useEffect(() => {
        dispatch(getPosts())
+     
         // return()=>{
         //     dispatch(reset())
         // }
@@ -69,12 +70,16 @@ const Home =()=> {
                                         return(
                                         <Postview 
                                         key={post.post._id}
-                                        // userId={post.post.userId}
+                                        _id = {post.post._id}
+                                        userId={post.post.userId}
                                         text={post.post.text}
                                         uploadUrl={post.post.uploadUrl}
                                         createdAt = {post.post.createdAt}
                                         avater="user.png"
                                         username = {post.user.firstName+" "+post.user.lastName}
+                                        userLike ={post.post.userLike}
+                                        likes={post.post.likes}
+                                       
                                         />
                                         )
                                     })

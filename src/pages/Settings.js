@@ -116,7 +116,7 @@ const Settings = () => {
                       <ul className="list-inline">
                         <li className="list-inline-item d-block border-bottom me-0">
                           <Link
-                            to="/defaultnoti"
+                            to="/notification"
                             className="pt-2 pb-2 d-flex align-items-center"
                           >
                             <i className="btn-round-md bg-gold-gradiant text-white feather-bell font-md me-3"></i>{" "}
