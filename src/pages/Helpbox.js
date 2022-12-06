@@ -14,8 +14,8 @@ import {
   AccordionItemButton,
 } from "react-accessible-accordion";
 
-class Helpbox extends Component {
-  render() {
+function Helpbox () {
+  
     return (
       <Fragment>
         <Header />
@@ -38,7 +38,7 @@ class Helpbox extends Component {
                       style={{ backgroundColor: "rgba(0,85,255,0.8)" }}
                     >
                       <h2 className="fw-700 display2-size text-white display2-md-size lh-2">
-                        Welcome to the Sociala Commuinity!
+                        Welcome EMU-IT Social Network{" "}
                       </h2>
                       <p className="font-xsss ps-lg-5 pe-lg-5 lh-28 text-grey-200">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -196,7 +196,7 @@ class Helpbox extends Component {
         <Appfooter />
       </Fragment>
     );
-  }
+  
 }
 
 export default Helpbox;

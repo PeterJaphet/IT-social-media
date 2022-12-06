@@ -32,7 +32,7 @@ const Login = () => {
     if (isError) {
       toast.error(message);
     }
-    if (isSuccess || user) {
+    if (isSuccess && user) {
       navigate("/home");
     }
     dispatch(reset());
@@ -40,7 +40,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = { email, password };
+    const userData ={ email,password};
+    console.log(user)
     console.log(userData);
     dispatch(login(userData));
   };
@@ -66,6 +67,9 @@ const Login = () => {
 
   return (
     <Fragment>
+      {
+        !user &&
+     
       <div className="main-wrap">
         <div className="nav-header bg-transparent shadow-none border-0">
           <div className="nav-top w-100">
@@ -166,6 +170,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+}
     </Fragment>
   );
 };

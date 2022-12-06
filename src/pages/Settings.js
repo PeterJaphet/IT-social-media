@@ -1,19 +1,21 @@
-import { Fragment } from "react";
+import { Fragment , useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {  useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
-
+import { useSelector} from "react-redux";
 import Header from "../components/Header";
 import Leftnav from "../components/Leftnav";
 import Rightchat from "../components/Rightchat";
 import Appfooter from "../components/Appfooter";
 import Popupchat from "../components/Popupchat";
+import { createPost } from "../features/auth/post/postSlice";
 
 const Settings = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onLogout = () => {
+
     dispatch(logout());
     dispatch(reset());
     navigate("/");
@@ -114,7 +116,7 @@ const Settings = () => {
                       <ul className="list-inline">
                         <li className="list-inline-item d-block border-bottom me-0">
                           <Link
-                            to="/defaultnoti"
+                            to="/notification"
                             className="pt-2 pb-2 d-flex align-items-center"
                           >
                             <i className="btn-round-md bg-gold-gradiant text-white feather-bell font-md me-3"></i>{" "}

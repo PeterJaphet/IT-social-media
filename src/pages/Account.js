@@ -7,8 +7,8 @@ import Rightchat from "../components/Rightchat";
 import Appfooter from "../components/Appfooter";
 import Popupchat from "../components/Popupchat";
 
-class Account extends Component {
-  render() {
+const Account =() => {
+ const user = JSON.parse(localStorage.getItem("user"));
     return (
       <Fragment>
         <Header />
@@ -21,7 +21,7 @@ class Account extends Component {
               <div className="middle-wrap">
                 <div className="card w-100 border-0 bg-white shadow-xs p-0 mb-4">
                   <div className="card-body p-4 w-100 bg-current border-0 d-flex rounded-3">
-                    <Link to="/defaultsettings" className="d-inline-block mt-2">
+                    <Link to="/settings" className="d-inline-block mt-2">
                       <i className="ti-arrow-left font-sm text-white"></i>
                     </Link>
                     <h4 className="font-xs text-white fw-600 ms-4 mb-0 mt-2">
@@ -38,11 +38,11 @@ class Account extends Component {
                             className="shadow-sm rounded-3 w-100"
                           />
                         </figure>
-                        <h2 className="fw-700 font-sm text-grey-900 mt-3">
-                          Surfiya Zakir
+                        <h2 className="fw-700 font-xsss text-grey-900 mt-3">
+                         {user.message.data.user.firstName +" "+user.message.data.user.lastName}
                         </h2>
                         <h4 className="text-grey-500 fw-500 mb-3 font-xsss mb-4">
-                          Brooklyn
+                        EMU
                         </h4>
                       </div>
                     </div>
@@ -183,7 +183,7 @@ class Account extends Component {
         <Appfooter />
       </Fragment>
     );
-  }
+
 }
 
 export default Account;
