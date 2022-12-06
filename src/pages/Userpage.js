@@ -8,10 +8,12 @@ import Popupchat from '../components/Popupchat';
 import Profiledetail from '../components/Profiledetail';
 import Profilephoto from '../components/Profilephoto';
 import ProfilecardThree from '../components/ProfilecardThree';
+import ProfilecardTwo from '../components/ProfilecardTwo';
 import Createpost from '../components/Createpost';
 import Events from '../components/Events';
 import Postview from '../components/Postview';
 import Load from '../components/Load';
+// import emuBanner from '../../public/assets/images/emuPic.png'
 
 const Userpage = ()=> {
 
@@ -41,9 +43,13 @@ useEffect(() => {
                             <div className="row">
                                 <div className="col-xl-12 mb-3">
                                    
-                                    <ProfilecardThree 
+                                    {/* <ProfilecardThree 
                                      name={profileData.firstName+" "+profileData.lastName} 
                                      email={profileData.email}
+                                    /> */}
+                                    <ProfilecardTwo 
+                                    name={profileData.firstName+" "+profileData.lastName} 
+                                    email={profileData.email}
                                     />
                                 </div>
                                 <div className="col-xl-4 col-xxl-3 col-lg-4 pe-0">
@@ -57,6 +63,7 @@ useEffect(() => {
                                     <Postview id="31" postvideo="" postimage="post.png" avater="user.png" user="David Goria" time="22 min ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
                                     <Postview id="33" postvideo="" postimage="post.png" avater="user.png" user="Anthony Daugloi" time="2 hour ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." /> */}
                                     <Load />
+                                    
                                 </div>
                             </div>
                         </div>

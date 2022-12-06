@@ -36,6 +36,7 @@ function Postview  (props)  {
 
   const toggleOpen = () => setIsOpen(!isOpen);
   const toggleActive = () => setIsActive(!isActive);
+  const user = JSON.parse(localStorage.getItem("user"));
 
 
   //const { user, time, des, avater, postimage, postvideo, id } = this.props;
@@ -44,17 +45,17 @@ function Postview  (props)  {
   const emojiClass = `${isActive ? " active" : ""}`;
   const [loveStatus, setLoveStatus] = useState(false);
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('likeStatus'));
-    console.log(data);
-    if ( data !== null ) setLoveStatus(JSON.parse(data));
+  // useEffect(() => { 
+  //   const data = JSON.parse(localStorage.getItem('likeStatus'));
+  //   console.log(data);
+  //   if ( data !== null ) setLoveStatus(JSON.parse(data));
     
-     },[])
+  //    },[])
      
-  useEffect(() => {
-    localStorage.setItem('likeStatus', JSON.stringify(loveStatus))
-    console.log(loveStatus)
-  },[loveStatus])
+  // useEffect(() => {
+  //   localStorage.setItem('likeStatus', JSON.stringify(loveStatus))
+  //   console.log(loveStatus)
+  // },[loveStatus])
 
  
 
@@ -157,7 +158,7 @@ function Postview  (props)  {
           <span 
              onClick={handleLove}       
           >
-          {loveStatus ? (<RiHeartFill className="text-danger me-2 btn-round-sm "  />):
+          {props.userLike.includes(user.message.data.user._id) ? (<RiHeartFill className="text-danger me-2 btn-round-sm "  />):
           (<RiHeartLine className="text-danger me-2 btn-round-sm "  />)}
           </span>
           <span>{props.userLike.length > 0 ? (props.userLike.length):null}</span>

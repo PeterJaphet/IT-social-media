@@ -9,7 +9,7 @@ const createPost = async (postData) => {
     //     }
     // }
 
-    const response = await axios.post("https://0144-185-237-231-171.eu.ngrok.io/post/add", postData)
+    const response = await axios.post("https://37bc-185-237-231-171.eu.ngrok.io/post/add", postData)
 
     // if(response.data){
     //     localStorage.setItem('postItems', JSON.stringify(response.data))
@@ -20,7 +20,7 @@ const createPost = async (postData) => {
 //Get Post 
 const getPost = async (id) => {
 
-    const response = await axios.get(`https://0144-185-237-231-171.eu.ngrok.io/post/getUserPosts/${id}/0/50`);
+    const response = await axios.get(`https://37bc-185-237-231-171.eu.ngrok.io/post/getUserPosts/${id}/0/50`);
 
    // if(response.data){
     //    const postItems = JSON.parse(localStorage.getItem('postItems'));

@@ -36,7 +36,7 @@ export const createPost = createAsyncThunk(
 
 async function like(PostId, UserId) {
   const response = await axios.post(
-    `https://0144-185-237-231-171.eu.ngrok.io/post/like`,{postId:PostId, userId:UserId}
+    `https://37bc-185-237-231-171.eu.ngrok.io/post/like`,{postId:PostId, userId:UserId}
   );
 
   return response.data;
