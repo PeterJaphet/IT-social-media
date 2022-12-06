@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { login, reset } from "../features/auth/authSlice";
 import Spinner from "../components/spinner";
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import "../assets/css/Login.css";
 
 const Login = () => {
