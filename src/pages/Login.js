@@ -1,33 +1,32 @@
-import { useState,useEffect,Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { login, reset } from "../features/auth/authSlice";
 import Spinner from "../components/spinner";
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import "../assets/css/Login.css";
 
 const Login = () => {
-
-  
-
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
 
-  const { email, password } = formData
+  const { email, password } = formData;
 
-const onChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({ ...formData, [name]: value });
-};
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-const navigate = useNavigate();
-const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-
 
   useEffect(() => {
     if (isError) {
@@ -39,14 +38,27 @@ const dispatch = useDispatch();
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData ={ email,password};
+    const userData = { email, password };
     console.log(userData);
-    dispatch(login(userData))
+    dispatch(login(userData));
   };
+
+  const [myOptions, setMyOptions] = useState([])
+    
+    const getDataFromAPI = () => {
+      console.log("Options Fetched from API")
+    
+      fetch('http://dummy.restapiexample.com/api/v1/employees').then((response) => {
+        return response.json()
+      }).then((res) => {
+        console.log(res.data)
+        for (var i = 0; i < res.data.length; i++) {
+          myOptions.push(res.data[i].employee_name)
+        }
+        setMyOptions(myOptions)
+      })
 
   if (isLoading) {
     return <Spinner />;
@@ -68,9 +80,7 @@ const dispatch = useDispatch();
             <Link
               to="/login"
               className="header-btn d-none d-lg-block  fw-500 text-white font-xsss p-3 ms-auto w100 text-center lh-20 rounded-xl"
-            >
-             
-            </Link>
+            ></Link>
             <Link
               to="/register"
               className="header-btn d-none d-lg-block bg-current fw-500 text-white font-xsss p-3 ms-2 w100 text-center lh-20 rounded-xl"
