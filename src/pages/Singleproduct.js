@@ -90,8 +90,8 @@ class Singleproduct extends Component {
                                                     <div className="inc qtybutton">+</div>
                                                 </div>
                                                 
-                                                <a href="/defaulthoteldetails" className="add-to-cart bg-dark text-white fw-700 ps-lg-5 pe-lg-5 text-uppercase font-xssss float-left border-dark border rounded-3 border-size-md d-inline-block mt-0 p-3 text-center ls-3">Add to cart</a>
-                                                <a href="/defaulthoteldetails" className="btn-round-xl alert-dark text-white d-inline-block mt-0 ms-4 float-left"><i className="ti-heart font-sm"></i></a>
+                                                <a href="/hoteldetails" className="add-to-cart bg-dark text-white fw-700 ps-lg-5 pe-lg-5 text-uppercase font-xssss float-left border-dark border rounded-3 border-size-md d-inline-block mt-0 p-3 text-center ls-3">Add to cart</a>
+                                                <a href="/hoteldetails" className="btn-round-xl alert-dark text-white d-inline-block mt-0 ms-4 float-left"><i className="ti-heart font-sm"></i></a>
                                             </div>  
                                         </form>
                                         <div className="clearfix"></div>

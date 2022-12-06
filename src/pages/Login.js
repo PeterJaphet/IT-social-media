@@ -33,7 +33,7 @@ const dispatch = useDispatch();
     if (isError) {
       toast.error(message);
     }
-    if (isSuccess || user) {
+    if (isSuccess && user) {
       navigate("/home");
     }
     dispatch(reset());

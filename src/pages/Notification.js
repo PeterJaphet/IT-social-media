@@ -149,15 +149,15 @@ class Notification extends Component {
                                         <div className="chat-wrapper p-3 w-100 position-relative scroll-bar bg-white theme-dark-bg">
                                             <h2 className="fw-700 mb-4 mt-2 font-md text-grey-900 d-flex align-items-center">Notification
                                             <span className="circle-count bg-warning text-white font-xsssss rounded-3 ms-2 ls-3 fw-600 p-2  mt-0">23</span> 
-                                            <a href="/defaultnotification" className="ms-auto btn-round-sm bg-greylight rounded-3"><i className="feather-hard-drive font-xss text-grey-500"></i></a> 
-                                            <a href="/defaultnotification" className="ms-2 btn-round-sm bg-greylight rounded-3"><i className="feather-alert-circle font-xss text-grey-500"></i></a> 
-                                            <a href="/defaultnotification" className="ms-2 btn-round-sm bg-greylight rounded-3"><i className="feather-trash-2 font-xss text-grey-500"></i></a></h2>
+                                            <a href="/notification" className="ms-auto btn-round-sm bg-greylight rounded-3"><i className="feather-hard-drive font-xss text-grey-500"></i></a> 
+                                            <a href="/notification" className="ms-2 btn-round-sm bg-greylight rounded-3"><i className="feather-alert-circle font-xss text-grey-500"></i></a> 
+                                            <a href="/notification" className="ms-2 btn-round-sm bg-greylight rounded-3"><i className="feather-trash-2 font-xss text-grey-500"></i></a></h2>
 
                                             <ul className="notification-box">
                                                 {notiList.map((value , index) => (
 
                                                 <li key={index}>
-                                                    <a href="/defaultnotification" className={`d-flex align-items-center p-3 rounded-3 ${value.read}`}>
+                                                    <a href="/notification" className={`d-flex align-items-center p-3 rounded-3 ${value.read}`}>
                                                         <img src={`assets/images/${value.imageUrl}`} alt="user" className="w45 me-3" />
                                                         <i className={`text-white me-2 font-xssss notification-react ${value.status}`}></i>
                                                         <h6 className="font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20"><strong>{value.name}</strong> posted in : {value.des}<span className="d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto"> {value.time}</span> </h6>
