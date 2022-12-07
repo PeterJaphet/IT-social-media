@@ -1,48 +1,60 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, Fragment } from "react";
 import Header from "../components/Header";
 import Leftnav from "../components/Leftnav";
 import Rightchat from "../components/Rightchat";
 import Pagetitle from "../components/Pagetitle";
 import Appfooter from "../components/Appfooter";
 import Popupchat from "../components/Popupchat";
+import {toast} from 'react-toastify';
 import {getFriends,reset,followUser,userFollowing } from "../features/auth/friends/friendsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 
 const Member = () => {
   const dispatch = useDispatch();
-  const {users } = useSelector(
+  const {users,followings,isSuccessFollow } = useSelector(
     (state) => state.friends
   );
 
-  const {followings} = useSelector((state) => state.friends)
+  
+
+  const user= JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     dispatch(getFriends());
-    return()=>{
-        dispatch(reset())
-    }
+    // return()=>{
+        //dispatch(reset())
+    // }
   },[dispatch])
 
   useEffect(() => {
     dispatch(userFollowing());
-    return()=>{
-        dispatch(reset())
-    }
+    // return()=>{
+      //  dispatch(reset())
+    // }
   },[dispatch])
+
+  useEffect(() => {
+    if(isSuccessFollow){
+      toast.success("Followed Successfully!!!");
+      dispatch(userFollowing())
+      dispatch(getFriends());
+
+        }
+          return()=>{
+       dispatch(reset())
+    }
+  
+  },[dispatch,isSuccessFollow])
+ 
 
   console.log(users)
   console.log(followings)
-users.filter((item)=>item._id!==followings.followinglist.userId);
 
+  // const handleFollow = ()=>{
 
-// var newUsers = users.filter(function (item)
-// {
-//   return item._id!==followings.followinglist.userId
-// }
-// );
+  // }
 
-//console.log(newUsers);
 
   return (
     <Fragment>
@@ -79,8 +91,10 @@ users.filter((item)=>item._id!==followings.followinglist.userId);
                           </p>
                           <span
                             className="mt-0 btn pt-2 pb-2 ps-3 pe-3 lh-24 ms-1 ls-3 d-inline-block rounded-xl bg-success font-xsssss fw-700 ls-lg text-white"
+                            onClick={()=>{dispatch(followUser({fromId:user.message.data.user._id,toId:value._id}))}}
+                            //onClick={()=>{console.log(user.message.data.user._id,value._id)}}
                           >
-                            ADD FRIEND
+                            FOLLOW
                           </span>
                         </div>
                       </div>
