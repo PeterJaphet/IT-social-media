@@ -34,7 +34,7 @@ class Header extends Component {
                 <form action="get" className="float-left header-search ms-3">
                     <div className="form-group mb-0 icon-input">
                         <i className="feather-search font-sm text-grey-400"></i>
-                        <input type="text" placeholder="Search" className="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 rounded-xl w350 theme-dark-bg" onChange={handleChange}value={searchInput} />
+                        <input type="text" placeholder="Search" className="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 rounded-xl w350 theme-dark-bg" />
                     </div>
                 </form>
                 <NavLink activeClassName="active" to="/home" className="p-2 text-center ms-3 menu-icon center-menu-icon"><i className="feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
@@ -71,7 +71,7 @@ class Header extends Component {
                 </div>
                 <Link to="/message" className="p-2 text-center ms-3 menu-icon chat-active-btn"><i className="feather-message-square font-xl text-current"></i></Link>
                 <Darkbutton />
-                <Link to="/settings" className="p-0 ms-3 menu-icon"><i className=" w40 mt--1"></i></Link>
+                <Link to="/settings" className="p-0 ms-3 menu-icon"><i className="feather-settings font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500" ></i></Link>
 
                 <nav className={`navigation scroll-bar ${navClass}`}>
                     <div className="container ps-0 pe-0">

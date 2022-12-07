@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../components/Header";
@@ -151,7 +151,7 @@ const Account = () => {
                         <textarea
                           className="form-control mb-0 p-3 h100 bg-greylight lh-16"
                           rows="5"
-                          placeholder="Write your message..."
+                          placeholder="Write about yourself......"
                         ></textarea>
                       </div>
 
