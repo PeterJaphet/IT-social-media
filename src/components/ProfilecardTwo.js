@@ -1,4 +1,5 @@
-import React,{Component} from 'react';
+
+import {Link} from 'react-router-dom';
 
 
 const ProfilecardTwo =(props)=> {
@@ -18,9 +19,9 @@ const ProfilecardTwo =(props)=> {
                         <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2"><b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">32k </b> Follow</h4>
                     </div>
                     <div className="d-flex align-items-center justify-content-center position-absolute right-15 top-10 mt-2 me-2">
-                        <a href="/member" className="d-none d-lg-block bg-success p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Add Friend</a>
-                        <a href="/emailbox" className="d-none d-lg-block bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i className="feather-mail font-md"></i></a>
-                        <a href="/home" id="dropdownMenu8" className="d-none d-lg-block btn-round-lg ms-2 rounded-3 text-grey-700 bg-greylight" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="ti-more font-md"></i></a>
+                        <Link to="/member" className="d-none d-lg-block bg-success p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Add Friend</Link>
+                        <Link to="/emailbox" className="d-none d-lg-block bg-greylight btn-round-lg ms-2 rounded-3 text-grey-700"><i className="feather-mail font-md"></i></Link>
+                        <Link to="/home" id="dropdownMenu8" className="d-none d-lg-block btn-round-lg ms-2 rounded-3 text-grey-700 bg-greylight" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="ti-more font-md"></i></Link>
                         <div className="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-lg" aria-labelledby="dropdownMenu8">
                             <div className="card-body p-0 d-flex">
                                 <i className="feather-bookmark text-grey-500 me-3 font-lg"></i>

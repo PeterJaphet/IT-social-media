@@ -8,6 +8,7 @@ const initialState = {
     isLoading:false,
     isError:false,
     isSuccess:false,
+    isSuccessFollow:false,
     message:""
 }
 
@@ -20,7 +21,7 @@ async function friends(){
     
 }
 
-export const getFriends = createAsyncThunk( "friends/addFriends",
+export const getFriends = createAsyncThunk( "friends/getFriends",
 async (_, thunkAPI) => {
   
   try {
@@ -52,6 +53,7 @@ export const followUser= createAsyncThunk(
   "friends/follow",
   async({fromId,toId},thunkAPI)=>{
     try{
+      console.log(fromId,toId)
       return await follow(fromId,toId);
     } catch (error) {
       const message =
@@ -104,15 +106,16 @@ export const friendsSlice = createSlice({
 
     extraReducers: (builder)=>{
         builder
-        .addCase(getFriends.fulfilled,(state,action)=>{
-            state.users=action.payload.message.data;
-        })
-        .addCase(followUser.fulfilled,(state)=>{
-          state.isSuccess = true;
-        })
         .addCase(userFollowing.fulfilled,(state,action)=>{
           state.followings = action.payload.message.data;
         })
+        .addCase(getFriends.fulfilled,(state,action)=>{
+            state.users=action.payload.message.data.filter(item=>!state.followings.followinglist.some(item1=>item1.userId===item._id));
+        })
+        .addCase(followUser.fulfilled,(state)=>{
+          state.isSuccessFollow = true;
+        })
+        
 
     }
 
