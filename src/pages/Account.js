@@ -1,20 +1,18 @@
 import React, { Component, Fragment } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Dialog } from 'primereact/dialog';
-import { InptuText } from 'primereact/inputtext';
 
 import Header from "../components/Header";
 import Leftnav from "../components/Leftnav";
 import Rightchat from "../components/Rightchat";
 import Appfooter from "../components/Appfooter";
 import Popupchat from "../components/Popupchat";
-
+import ProfilePicChanger from "../components/ProfilePicChanger";
+  
+class Account extends Component {
 const Account =() => {
  const user = JSON.parse(localStorage.getItem("user"));
- const [image, setimage] = useState(second)
-
-
+ 
 
     return (
       <Fragment>
@@ -36,15 +34,9 @@ const Account =() => {
                     </h4>
                   </div>
                   <div className="card-body p-lg-5 p-4 w-100 border-0 ">
-                    {/* <div className="row justify-content-center">
+                    <div className="row justify-content-center">
                       <div className="col-lg-4 text-center">
-                        <figure className="avatar ms-auto me-auto mb-0 mt-2 w100">
-                          <img
-                            src="https://via.placeholder.com/300x300.png"
-                            alt="avater"
-                            className="shadow-sm rounded-3 w-100"
-                          />
-                        </figure>
+                        <ProfilePicChanger />
                         <h2 className="fw-700 font-xsss text-grey-900 mt-3">
                          {user.message.data.user.firstName +" "+user.message.data.user.lastName}
                         </h2>
@@ -52,7 +44,7 @@ const Account =() => {
                         EMU
                         </h4>
                       </div>
-                    </div> */}
+                    </div>
 
                     <form action="#">
                       <div className="row">
@@ -126,6 +118,7 @@ const Account =() => {
                         </div>
 
 
+
                         <div className="col-lg-12 mb-3">
                           <label className="mont-font fw-600 font-xsss mb-2 text-dark">
                             Bio
@@ -159,6 +152,7 @@ const Account =() => {
       </Fragment>
     );
 
+}
 }
 
 export default Account;
