@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Dialog } from 'primereact/dialog';
+import { InptuText } from 'primereact/inputtext';
 
 import Header from "../components/Header";
 import Leftnav from "../components/Leftnav";
@@ -9,6 +12,10 @@ import Popupchat from "../components/Popupchat";
 
 const Account =() => {
  const user = JSON.parse(localStorage.getItem("user"));
+ const [image, setimage] = useState(second)
+
+
+
     return (
       <Fragment>
         <Header />
@@ -29,7 +36,7 @@ const Account =() => {
                     </h4>
                   </div>
                   <div className="card-body p-lg-5 p-4 w-100 border-0 ">
-                    <div className="row justify-content-center">
+                    {/* <div className="row justify-content-center">
                       <div className="col-lg-4 text-center">
                         <figure className="avatar ms-auto me-auto mb-0 mt-2 w100">
                           <img
@@ -45,7 +52,7 @@ const Account =() => {
                         EMU
                         </h4>
                       </div>
-                    </div>
+                    </div> */}
 
                     <form action="#">
                       <div className="row">
@@ -118,47 +125,15 @@ const Account =() => {
                           </div>
                         </div>
 
-                        <div className="col-lg-6 mb-3">
-                          <div className="form-group">
-                            <label className="mont-font fw-600 font-xsss mb-2">
-                              Postcode
-                            </label>
-                            <input type="text" className="form-control" />
-                          </div>
-                        </div>
-
-                        <div className="col-lg-12 mb-3">
-                          <div className="card mt-3 border-0">
-                            <div className="card-body d-flex justify-content-between align-items-end p-0">
-                              <div className="form-group mb-0 w-100">
-                                <input
-                                  type="file"
-                                  name="file"
-                                  id="file"
-                                  className="input-file"
-                                />
-                                <label
-                                  htmlFor="file"
-                                  className="rounded-3 text-center bg-white btn-tertiary js-labelFile p-4 w-100 border-dashed"
-                                >
-                                  <i className="ti-cloud-down large-icon me-3 d-block"></i>
-                                  <span className="js-fileName">
-                                    Drag and drop or click to replace
-                                  </span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
                         <div className="col-lg-12 mb-3">
                           <label className="mont-font fw-600 font-xsss mb-2 text-dark">
-                            Description
+                            Bio
                           </label>
                           <textarea
                             className="form-control mb-0 p-3 h100 bg-greylight lh-16"
                             rows="5"
-                            placeholder="Write your message..."
+                            placeholder="Write about yourself..."
                           ></textarea>
                         </div>
 

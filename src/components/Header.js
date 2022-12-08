@@ -19,6 +19,7 @@ class Header extends Component {
         const buttonClass = `${this.state.isOpen ? " active" : ""}`;
         const searchClass = `${this.state.isActive ? " show" : ""}`;
         const notiClass = `${this.state.isNoti ? " show" : ""}`;
+    
 
         return (
             <div className="nav-header bg-white shadow-xs border-0">
@@ -37,7 +38,7 @@ class Header extends Component {
                     </div>
                 </form>
                 <NavLink activeClassName="active" to="/home" className="p-2 text-center ms-3 menu-icon center-menu-icon"><i className="feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
-                <NavLink activeClassName="active" to="/storie" className="p-2 text-center ms-0 menu-icon center-menu-icon"><i className="feather-zap font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
+                <NavLink activeClassName="active" to="/storie" className="p-2 text-center ms-0 menu-icon center-menu-icon"><i className="feather-plus-circle font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
                 <NavLink activeClassName="active" to="/video" className="p-2 text-center ms-0 menu-icon center-menu-icon"><i className="feather-video font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
                 <NavLink activeClassName="active" to="/group" className="p-2 text-center ms-0 menu-icon center-menu-icon"><i className="feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
                 <NavLink activeClassName="active" to="/shop2" className="p-2 text-center ms-0 menu-icon center-menu-icon"><i className="feather-shopping-bag font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></NavLink>
@@ -70,7 +71,7 @@ class Header extends Component {
                 </div>
                 <Link to="/message" className="p-2 text-center ms-3 menu-icon chat-active-btn"><i className="feather-message-square font-xl text-current"></i></Link>
                 <Darkbutton />
-                <Link to="/settings" className="p-0 ms-3 menu-icon"><img src="assets/images/user.png" alt="user" className="w40 mt--1" /></Link>
+                <Link to="/settings" className="p-0 ms-3 menu-icon"><i className="ti-settings font-xl text-current"></i></Link>
 
                 <nav className={`navigation scroll-bar ${navClass}`}>
                     <div className="container ps-0 pe-0">
@@ -79,10 +80,10 @@ class Header extends Component {
                                 <div className="nav-caption fw-600 font-xssss text-grey-500"><span>New </span>Feeds</div>
                                 <ul className="mb-1 top-content">
                                     <li className="logo d-none d-xl-block d-lg-block"></li>
-                                    <li><Link to="/home" className="nav-content-bttn open-font"><i className="feather-tv btn-round-md bg-blue-gradiant me-3"></i><span>Newsfeed</span></Link></li>
+                                    <li><Link to="/home" className="nav-content-bttn open-font"><i className="feather-tv btn-round-md bg-blue   -gradiant me-3"></i><span>Newsfeed</span></Link></li>
                                     <li><Link to="/badge" className="nav-content-bttn open-font"><i className="feather-award btn-round-md bg-red-gradiant me-3"></i><span>Badges</span></Link></li>
                                     <li><Link to="/storie" className="nav-content-bttn open-font"><i className="feather-globe btn-round-md bg-gold-gradiant me-3"></i><span>Explore Stories</span></Link></li>
-                                    <li><Link to="/group" className="nav-content-bttn open-font"><i className="feather-zap btn-round-md bg-mini-gradiant me-3"></i><span>Popular Groups</span></Link></li>
+                                    <li><Link to="/group" className="nav-content-bttn open-font"><i className="feather-users btn-round-md bg-mini-gradiant me-3"></i><span>Popular Groups</span></Link></li>
                                     <li><Link to="/userpage" className="nav-content-bttn open-font"><i className="feather-user btn-round-md bg-primary-gradiant me-3"></i><span>Author Profile </span></Link></li>                        
                                 </ul>
                             </div>
