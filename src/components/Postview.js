@@ -1,92 +1,102 @@
-import React from "react";
-import { useState,useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { React } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import TimeAgo from "javascript-time-ago";
-import en from 'javascript-time-ago/locale/en'
+import en from "javascript-time-ago/locale/en";
 
 //date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
-import {RiHeartFill,
-        RiHeartLine,
-        RiMessage3Line,
-        RiMessage3Fill,
-        RiMessage,
-        RiShareForward2Line,
-        RiSendPlane2Fill,
-} from 'react-icons/ri'
+import {
+  RiHeartFill,
+  RiHeartLine,
+  RiMessage3Line,
+  RiMessage3Fill,
+  RiMessage,
+  RiShareForward2Line,
+  RiSendPlane2Fill,
+} from "react-icons/ri";
 
-import { addLove} from "../features/auth/post/postSlice";
+import {
+  addLove,
+  addComment,
+  reset,
+  getComments,
+} from "../features/auth/post/postSlice";
 
-
-function Postview  (props)  {
+function Postview(props) {
   TimeAgo.addLocale(en);
- const timeAgo = new TimeAgo("en-US");
+  const timeAgo = new TimeAgo("en-US");
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
- // const [loveStatus, setLoveStatus] = useState(false);
+  // const [loveStatus, setLoveStatus] = useState(false);
   const [commentStatus, setCommentStatus] = useState(false);
   const [commentContent, setCommentContent] = useState("");
-  const [sendButtonDisable, setSendButtonDisable] =useState(true);
+  const [sendButtonDisable, setSendButtonDisable] = useState(true);
   const dispatch = useDispatch();
 
-
+  const { comments } = useSelector((state) => state.post);
 
   const toggleOpen = () => setIsOpen(!isOpen);
   const toggleActive = () => setIsActive(!isActive);
   const user = JSON.parse(localStorage.getItem("user"));
 
-
-  //const { user, time, des, avater, postimage, postvideo, id } = this.props;
-
   const menuClass = `${isOpen ? " show" : ""}`;
   const emojiClass = `${isActive ? " active" : ""}`;
   const [loveStatus, setLoveStatus] = useState(false);
 
-  // useEffect(() => { 
+  // useEffect(() => {
   //   const data = JSON.parse(localStorage.getItem('likeStatus'));
   //   console.log(data);
   //   if ( data !== null ) setLoveStatus(JSON.parse(data));
-    
+
   //    },[])
-     
+
   // useEffect(() => {
   //   localStorage.setItem('likeStatus', JSON.stringify(loveStatus))
   //   console.log(loveStatus)
   // },[loveStatus])
 
- 
-
-  
-  function handleLove(){
-
-
+  function handleLove() {
     const user = JSON.parse(localStorage.getItem("user"));
     // console.log(props.userLike)
     // console.log(user.message.data.user._id)
     // console.log(props.likes)
-    
-    if(!props.userLike.includes(user.message.data.user._id)){
-      setLoveStatus(true)
-      dispatch(addLove({postId:props._id,userId:user.message.data.user._id}))
-      console.log(props.userLike)
-      console.log(user.message.data.user._id)
-      console.log(props.likes)
-      
-    }
-    else{
-      console.log(props.userLike)
-      setLoveStatus(false)
-      dispatch(addLove({postId:props._id,userId:user.message.data.user._id}))
-    }
 
-   
+    if (!props.userLike.includes(user.message.data.user._id)) {
+      setLoveStatus(true);
+      dispatch(
+        addLove({ postId: props._id, userId: user.message.data.user._id })
+      );
+      console.log(props.userLike);
+      console.log(user.message.data.user._id);
+      console.log(props.likes);
+    } else {
+      console.log(props.userLike);
+      setLoveStatus(false);
+      dispatch(
+        addLove({ postId: props._id, userId: user.message.data.user._id })
+      );
+    }
   }
 
- 
+  function handleCommentButtonClick(e) {
+    setCommentStatus(!commentStatus);
+  }
 
+  function handleCommentContentChange(e) {
+    e.preventDefault();
+
+    setCommentContent(e.target.value);
+
+    if (commentContent.length > 0) {
+      setSendButtonDisable(false);
+    } else {
+      setSendButtonDisable(true);
+    }
+  }
 
   return (
     <div className="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-3">
@@ -100,8 +110,7 @@ function Postview  (props)  {
         </figure>
         <h4 className="fw-700 text-grey-900 font-xssss mt-1">
           {" "}
-          {}{" "}
-          {props.username}{" "}
+          {} {props.username}{" "}
           <span className="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">
             {" "}
             {/* {console.log(props.createdAt)} */}
@@ -126,8 +135,7 @@ function Postview  (props)  {
       )} */}
       <div className="card-body p-0 me-lg-5">
         <p className="fw-500 text-grey-500 lh-26 font-xssss w-100 mb-2">
-          {}{" "}
-          {props.text}{" "}
+          {} {props.text}{" "}
           {/* <a href="/defaultvideo" className="fw-600 text-primary ms-2">
             See more
           </a> */}
@@ -155,27 +163,33 @@ function Postview  (props)  {
         >
           {/* <i className="feather-thumbs-up text-white bg-primary-gradiant me-1 btn-round-xs font-xss"></i>{" "} */}
           {/* <i className="feather-heart text-white bg-red-gradiant me-2 btn-round-xs font-xss"></i> */}
-          <span 
-             onClick={handleLove}       
-          >
-          {props.userLike.includes(user.message.data.user._id) ? (<RiHeartFill className="text-danger me-2 btn-round-sm "  />):
-          (<RiHeartLine className="text-danger me-2 btn-round-sm "  />)}
+          <span onClick={handleLove}>
+            {props.userLike.includes(user.message.data.user._id) ? (
+              <RiHeartFill className="text-danger me-2 btn-round-sm " />
+            ) : (
+              <RiHeartLine className="text-danger me-2 btn-round-sm " />
+            )}
           </span>
-          <span>{props.userLike.length > 0 ? (props.userLike.length):null}</span>
+          <span>
+            {props.userLike.length > 0 ? props.userLike.length : null}
+          </span>
           {/* <span>{props.likes}</span>  */}
-        
         </div>
-        <a
-          href="/video"
+        <span
           className="d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss"
+          onClick={handleCommentButtonClick}
         >
           {/* <i className="feather-message-circle text-dark text-grey-900 btn-round-sm font-lg"></i> */}
           <span className="d-none-xss">
-            <RiMessage3Line className=" me-2 btn-round-sm "/></span>
-        </a>
+            <RiMessage3Line className=" me-2 btn-round-sm " />
+          </span>
+        </span>
+        <span className="mt-1 p-1">
+          {comments.length > 0 ? comments.length : ""}
+        </span>
         <div
           className={`pointer ms-auto d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss ${menuClass}`}
-        //   id={`dropdownMenu${id}`}
+          //   id={`dropdownMenu${id}`}
           data-bs-toggle="dropdown"
           aria-expanded="false"
           onClick={toggleOpen}
@@ -185,7 +199,7 @@ function Postview  (props)  {
         </div>
         <div
           className={`dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-lg right-0 ${menuClass}`}
-        //   aria-labelledby={`dropdownMenu${id}`}
+          //   aria-labelledby={`dropdownMenu${id}`}
         >
           <h4 className="fw-700 font-xss text-grey-900 d-flex align-items-center">
             Share{" "}
@@ -260,8 +274,35 @@ function Postview  (props)  {
           />
         </div>
       </div>
+
+      {commentStatus && (
+        <form action="#">
+          <div className="row">
+            <div className="col-lg-11 mb-1 mt-3">
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Add Comment"
+                  value={commentContent}
+                  onChange={handleCommentContentChange}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-1 mt-4">
+                <span
+                disabled={sendButtonDisable}
+                onClick={()=>{dispatch(addComment({}))}}
+                >
+              <RiSendPlane2Fill className="text-success me-2 btn-round-sm " />
+              </span>
+            </div>
+          </div>
+        </form>
+      )}
     </div>
   );
-};
+}
 
 export default Postview;

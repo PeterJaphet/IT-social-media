@@ -95,11 +95,13 @@ const Home =()=> {
                                     <Load />
                                 </div>
                                 <div className="col-xl-4 col-xxl-3 col-lg-4 ps-lg-0">
-                                    <Friends />
-                                    <Contacts />
-                                    <Group />
+                                    {/* <Friends /> */}
+                                    {/* <Contacts /> */}
+                                    {/* <Group /> */}
                                     <Events />
-                                    <Profilephoto />
+                                    {/* <Profilephoto /> */}
+                                    {/* <Memberslider /> */}
+                                    {/* <Friendsilder /> */}
                                 </div>
                             </div>
                         </div>
