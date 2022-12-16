@@ -40,6 +40,8 @@ class Profilephoto extends Component {
         };
     }
 
+    
+
     render() {
         const { tab1, isOpen } = this.state;
 
