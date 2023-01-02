@@ -1,11 +1,14 @@
 import axios from 'axios';
+import constants from '../../hooks/constant'
+
+const API_URL = constants.API_URL;
 
 
-const API_URL = 'https://37bc-185-237-231-171.eu.ngrok.io/user/signup/local';
+//const API_URL = 'https://37bc-185-237-231-171.eu.ngrok.io/user/signup/local';
 
 //register user 
 const register = async (userData) =>{
-    const response = await axios.post(API_URL, userData)
+    const response = await axios.post(`${API_URL}/user/signup/local`, userData)
 
     if(response.data){
         localStorage.setItem('user', JSON.stringify(response.data))
@@ -16,7 +19,7 @@ const register = async (userData) =>{
 
 //login user
 const login = async (userData) =>{
-    const response = await axios.post('https://37bc-185-237-231-171.eu.ngrok.io/auth/local', userData)
+    const response = await axios.post(`${API_URL}/auth/local`, userData)
     if(response.data){
         localStorage.setItem('user', JSON.stringify(response.data))
     }

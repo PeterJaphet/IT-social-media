@@ -75,6 +75,8 @@ function App() {
               <Route path="group" element={<Group />}/>
               <Route path="helpbox" element={<Helpbox />}/>
               <Route path="payment" element={<Payment />}/>
+              <Route path="shop2" element={<ShopTwo />}/>
+
                    
 
                     <Route exact path={`${process.env.PUBLIC_URL}/badge`} component={Badge}/>
@@ -88,7 +90,6 @@ function App() {
                     
                     
                     <Route exact path={`${process.env.PUBLIC_URL}/shop1`} component={ShopOne}/>
-                    <Route exact path={`${process.env.PUBLIC_URL}/shop2`} component={ShopTwo}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/shop3`} component={ShopThree}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/singleproduct`} component={Singleproduct}/>
                     <Route exact path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
