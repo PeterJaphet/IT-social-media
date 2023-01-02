@@ -1,7 +1,8 @@
 import { React } from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { toast } from "react-toastify";
+import { Hashicon } from "@emeraldpay/hashicon-react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 
@@ -22,6 +23,7 @@ import {
   addLove,
   addComment,
   reset,
+  COMMENT_RESET,
   getComments,
 } from "../features/auth/post/postSlice";
 
@@ -37,7 +39,7 @@ function Postview(props) {
   const [sendButtonDisable, setSendButtonDisable] = useState(true);
   const dispatch = useDispatch();
 
-  const { comments } = useSelector((state) => state.post);
+  const { comments, isCommentSuccess } = useSelector((state) => state.post);
 
   const toggleOpen = () => setIsOpen(!isOpen);
   const toggleActive = () => setIsActive(!isActive);
@@ -48,11 +50,10 @@ function Postview(props) {
   const [loveStatus, setLoveStatus] = useState(false);
 
   // useEffect(() => {
-  //   const data = JSON.parse(localStorage.getItem('likeStatus'));
-  //   console.log(data);
-  //   if ( data !== null ) setLoveStatus(JSON.parse(data));
+  //   dispatch(getComments({ postid: props._id }));
+  // }, [dispatch]);
 
-  //    },[])
+  //console.log(comments);
 
   // useEffect(() => {
   //   localStorage.setItem('likeStatus', JSON.stringify(loveStatus))
@@ -81,6 +82,7 @@ function Postview(props) {
       );
     }
   }
+  console.log(props.commentList)
 
   function handleCommentButtonClick(e) {
     setCommentStatus(!commentStatus);
@@ -97,6 +99,15 @@ function Postview(props) {
       setSendButtonDisable(true);
     }
   }
+
+  // useEffect(() => {
+  //   console.log(isCommentSuccess)
+  //   if (isCommentSuccess) {
+  //     toast.success("Commented Successfully");
+  //     dispatch(COMMENT_RESET());
+  //   }
+  // }, [dispatch, isCommentSuccess]);
+  //console.log(comments);
 
   return (
     <div className="card w-100 shadow-xss rounded-xxl border-0 p-4 mb-3">
@@ -185,7 +196,8 @@ function Postview(props) {
           </span>
         </span>
         <span className="mt-1 p-1">
-          {comments.length > 0 ? comments.length : ""}
+          {/* {console.log(comments)} */}
+          {props.commentList.length > 0 ? props.commentList.length : ""}
         </span>
         <div
           className={`pointer ms-auto d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss ${menuClass}`}
@@ -275,31 +287,68 @@ function Postview(props) {
         </div>
       </div>
 
-      {commentStatus && (
-        <form action="#">
-          <div className="row">
-            <div className="col-lg-11 mb-1 mt-3">
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Add Comment"
-                  value={commentContent}
-                  onChange={handleCommentContentChange}
-                />
+      {commentStatus === true ? (
+        <>
+          <form action="#">
+            <div className="row">
+              <div className="col-lg-11 mb-1 mt-3">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Add Comment"
+                    value={commentContent}
+                    onChange={handleCommentContentChange}
+                  />
+                </div>
+              </div>
+
+              <div className="col-lg-1 mt-4">
+                <span
+                  disabled={sendButtonDisable}
+                  onClick={() => {
+                    dispatch(
+                      addComment({
+                        postid: props._id,
+                        userid: user.message.data.user._id,
+                        message: commentContent,
+                      })
+                     
+                    );
+                    setCommentContent("");
+                  }}
+                >
+                  <RiSendPlane2Fill className="text-success me-2 btn-round-sm " />
+                </span>
               </div>
             </div>
-
-            <div className="col-lg-1 mt-4">
-                <span
-                disabled={sendButtonDisable}
-                onClick={()=>{dispatch(addComment({}))}}
-                >
-              <RiSendPlane2Fill className="text-success me-2 btn-round-sm " />
-              </span>
+          </form>
+          {props.commentList.map((item) => (
+            <div className="border roounded border-info my-3 px-2 pb-2">
+              <div className="d-flex align-items-center my-2">
+                <div className="me-auto mx-1">
+                  {/* <Hashicon value={item.userid} size={30} />{" "} */}
+                  <figure className="avatar me-3 mt-3">
+          <img
+            src={`assets/images/${props.avater}`}
+            alt="avater"
+            className="shadow-sm rounded-circle w45"
+          /></figure>
+                </div>
+                <div className="w-100 mx-1 fw-bold">
+                  <span>
+                    {user.message.data.user.firstName +
+                      " " +
+                      user.message.data.user.lastName}
+                  </span>
+                </div>
+              </div>
+              <div className="w-100 mx-1 ml-3">{item.message}</div>
             </div>
-          </div>
-        </form>
+          ))}
+        </>
+      ) : (
+        <span></span>
       )}
     </div>
   );

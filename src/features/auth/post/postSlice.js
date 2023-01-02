@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import postService from "./postService";
 import axios from "axios";
+import constants from '../../../hooks/constant'
+
+const API_URL = constants.API_URL;
+
 
 const initialState = {
   postItems: [],
@@ -38,7 +42,7 @@ export const createPost = createAsyncThunk(
 
 async function like(PostId, UserId) {
   const response = await axios.post(
-    `https://37bc-185-237-231-171.eu.ngrok.io/post/like`,{postId:PostId, userId:UserId}
+    `${API_URL}/post/like`,{postId:PostId, userId:UserId}
   );
 
   return response.data;
@@ -70,7 +74,7 @@ export const getPosts = createAsyncThunk(
 //Add Comments
 async function comment(postid, userid,message) {
   const response = await axios.post(
-    `https://37bc-185-237-231-171.eu.ngrok.io/comment/addcomment`,{postid:postid, userid:userid, message:message}
+    `${API_URL}/comment/addcomment`,{postid:postid, userid:userid, message:message}
   );
 
   return response.data;
@@ -97,7 +101,7 @@ export const addComment = createAsyncThunk(
 
 async function getcomment(postid) {
   const response = await axios.get(
-    `https://37bc-185-237-231-171.eu.ngrok.io/comment/getcomment/${postid}`
+    `${API_URL}/comment/getcomment/${postid}`
   );
 
   return response.data;
@@ -174,9 +178,12 @@ export const postSlice = createSlice({
       state.isGetPostSuccess= false;
       state.isSuccess= false;
       state.isLoading= false;
-      state.isCommentSuccess=false;
+      // state.isCommentSuccess=false;
       state.message= "";
     },
+    COMMENT_RESET: (state) =>{
+      state.isCommentSuccess = false;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -218,5 +225,5 @@ export const postSlice = createSlice({
   },
 });
 
-export const { reset,addLove } = postSlice.actions;
+export const { reset,addLove, COMMENT_RESET } = postSlice.actions;
 export default postSlice.reducer;

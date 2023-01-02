@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import constants from '../../../hooks/constant'
+
+const API_URL = constants.API_URL;
 
 const initialState = {
   users: [],
@@ -16,7 +19,7 @@ const initialState = {
 //get users
 async function friends() {
   const response = await axios.get(
-    `https://37bc-185-237-231-171.eu.ngrok.io/user/getAll/0/100`
+    `${API_URL}/user/getAll/0/100`
   );
   console.log(response.data);
   return response.data;
@@ -43,7 +46,7 @@ export const getFriends = createAsyncThunk(
 //follow users
 async function follow(fromId, toId) {
   const response = await axios.post(
-    `https://37bc-185-237-231-171.eu.ngrok.io/follow/followuser`,
+    `${API_URL}/follow/followuser`,
     { fromuserid: fromId, touserid: toId }
   );
 
@@ -71,7 +74,7 @@ export const followUser = createAsyncThunk(
 //get following
 async function followings(id) {
   const response = await axios.get(
-    `https://37bc-185-237-231-171.eu.ngrok.io/follow/userfollowing/${id}`
+    `${API_URL}/follow/userfollowing/${id}`
   );
 
   return response.data;

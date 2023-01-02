@@ -48,6 +48,8 @@ const Home =()=> {
         // }
     },[dispatch]);
 
+    console.log(postItems)
+
 
 
 
@@ -79,6 +81,7 @@ const Home =()=> {
                                         username = {post.user.firstName+" "+post.user.lastName}
                                         userLike ={post.post.userLike}
                                         likes={post.post.likes}
+                                        commentList={post.comments}
                                        
                                         />
                                         )
