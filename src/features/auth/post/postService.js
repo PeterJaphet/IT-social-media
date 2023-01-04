@@ -1,4 +1,7 @@
 import axios from 'axios';
+import constants from '../../../hooks/constant'
+
+const API_URL = constants.API_URL;
 
 //Add Post
 const createPost = async (postData) => {
@@ -9,7 +12,7 @@ const createPost = async (postData) => {
     //     }
     // }
 
-    const response = await axios.post("https://37bc-185-237-231-171.eu.ngrok.io/post/add", postData)
+    const response = await axios.post(`${API_URL}/post/add`, postData)
 
     // if(response.data){
     //     localStorage.setItem('postItems', JSON.stringify(response.data))
@@ -20,7 +23,9 @@ const createPost = async (postData) => {
 //Get Post 
 const getPost = async (id) => {
 
-    const response = await axios.get(`https://37bc-185-237-231-171.eu.ngrok.io/post/getUserPosts/${id}/0/50`);
+
+    console.log(`${API_URL}/post/getUserPosts/${id}/0/50`)
+    const response = await axios.get(`${API_URL}/post/getUserPosts/${id}/0/50`);
 
    // if(response.data){
     //    const postItems = JSON.parse(localStorage.getItem('postItems'));

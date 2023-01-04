@@ -1,14 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import postService from "./postService";
 import axios from "axios";
+import constants from '../../../hooks/constant'
+
+const API_URL = constants.API_URL;
+
 
 const initialState = {
   postItems: [],
+  comments:[],
   isError: false,
   isGetPostError: false,
   isGetPostSuccess: false,
   isSuccess: false,
   isLoading: false,
+  isCommentSuccess:false,
   message: "",
 };
 
@@ -36,30 +42,14 @@ export const createPost = createAsyncThunk(
 
 async function like(PostId, UserId) {
   const response = await axios.post(
-    `https://37bc-185-237-231-171.eu.ngrok.io/post/like`,{postId:PostId, userId:UserId}
+    `${API_URL}/post/like`,{postId:PostId, userId:UserId}
   );
 
   return response.data;
 }
 
-// export const updateLike = createAsyncThunk(
-//   "post/likePost",
-//   async (id, status, thunkAPI) => {
-//     try {
-//       return await like(id, status);
 
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString();
-//       return thunkAPI.rejectWithValue(message);
-//     }
-//   }
-// );
-
+//get posts
 export const getPosts = createAsyncThunk(
   "post/followingPost",
   async (_, thunkAPI) => {
@@ -79,6 +69,61 @@ export const getPosts = createAsyncThunk(
     }
   }
 );
+
+
+//Add Comments
+async function comment(postid, userid,message) {
+  const response = await axios.post(
+    `${API_URL}/comment/addcomment`,{postid:postid, userid:userid, message:message}
+  );
+
+  return response.data;
+}
+
+export const addComment = createAsyncThunk(
+  "post/addComment",
+  async ({postid, userid,message}, thunkAPI) => {
+    try {
+      return await comment(postid, userid,message);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+//getComments function
+
+async function getcomment(postid) {
+  const response = await axios.get(
+    `${API_URL}/comment/getcomment/${postid}`
+  );
+
+  return response.data;
+}
+
+export const getComments = createAsyncThunk(
+  "post/getComments",
+  async ({postid}, thunkAPI) => {
+    try {
+      return await getcomment(postid);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 
 export const postSlice = createSlice({
   name: "post",
@@ -125,7 +170,20 @@ export const postSlice = createSlice({
         }
       }
     },
-    reset: () => initialState,
+    reset: (state) => {
+      //state.followings = null;
+      // state.isSuccessFollow = false;
+      state.isError= false;
+      state.isGetPostError= false;
+      state.isGetPostSuccess= false;
+      state.isSuccess= false;
+      state.isLoading= false;
+      // state.isCommentSuccess=false;
+      state.message= "";
+    },
+    COMMENT_RESET: (state) =>{
+      state.isCommentSuccess = false;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -158,8 +216,14 @@ export const postSlice = createSlice({
         state.isGetPostSuccess = false;
         state.message = action.payload;
       })
+      .addCase(addComment.fulfilled, (state) => {
+        state.isCommentSuccess=true;
+      })
+      .addCase(getComments.fulfilled, (state, action)=>{
+        state.comments = action.payload.message.data
+      })
   },
 });
 
-export const { reset,addLove } = postSlice.actions;
+export const { reset,addLove, COMMENT_RESET } = postSlice.actions;
 export default postSlice.reducer;
