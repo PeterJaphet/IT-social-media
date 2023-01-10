@@ -1,7 +1,9 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Navigate, Routes, Route } from 'react-router-dom'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useSelector } from "react-redux";
+
 
 // Create Import File
 import './main.scss';
@@ -28,6 +30,7 @@ import Register from './pages/Register';
 import Forgot from './pages/Forgot';
 import Notfound from './pages/Notfound';
 
+
 import ShopOne from './pages/ShopOne';
 import ShopTwo from './pages/ShopTwo';
 import ShopThree from './pages/ShopThree';
@@ -41,6 +44,7 @@ import Event from './pages/Event';
 import Hotel from './pages/Hotel';
 import Videos from './pages/Videos';
 import Comingsoon from './pages/Comingsoon';
+import MainChat from './pages/mainChat';
 
 
 import Grouppage from './pages/Grouppage';
@@ -50,32 +54,48 @@ import Hotelsingle from './pages/Hotelsingle';
 import Analytics from './pages/Analytics';
 
 function App() {
+
+  const { user } = useSelector(
+    (state) => state.auth
+  );
+
+
+const ProtectedRoute = ({children}) =>{
+  if(!user){
+    return <Navigate to = "/login"></Navigate>
+  }
+  return children;
+
+}
+
+
+
     return (
       <>
-        <BrowserRouter>
               <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="home" element={<Home />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="userpage" element={<Userpage />}/>
-              <Route path="accountinformation" element={<Account/>}/>
-              <Route path="contactinformation" element={<Contactinfo/>}/>
-              <Route path="socialaccount" element={<Socialaccount />}/>
-              <Route path="password" element={<Password />}/>
-              <Route path="notification" element={<Notification />}/>
-              <Route path="grouppage" element={<Grouppage/>}/>
-              <Route path="message" element={<Chat />}/>
-              <Route path="forgot" element={<Forgot />}/>
-              <Route path="notfound" element={<Notfound />}/>
-              <Route path="authorpage" element={<Authorpage />}/>
-              <Route path="storie" element={<Storie />}/>
-              <Route path="member" element={<Member />}/>
-              <Route path="group" element={<Group />}/>
-              <Route path="helpbox" element={<Helpbox />}/>
-              <Route path="payment" element={<Payment />}/>
-              <Route path="shop2" element={<ShopTwo />}/>
+              <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+              <Route path="/userpage" element={<ProtectedRoute><Userpage /></ProtectedRoute>}/>
+              <Route path="/accountinformation" element={<ProtectedRoute><Account/></ProtectedRoute>}/>
+              <Route path="/contactinformation" element={<ProtectedRoute><Contactinfo/></ProtectedRoute>}/>
+              <Route path="/socialaccount" element={<ProtectedRoute><Socialaccount /></ProtectedRoute>}/>
+              <Route path="/password" element={<ProtectedRoute><Password /></ProtectedRoute>}/>
+              <Route path="/notification" element={<ProtectedRoute><Notification /></ProtectedRoute>}/>
+              <Route path="/grouppage" element={<ProtectedRoute><Grouppage/></ProtectedRoute>}/>
+              <Route path="/message" element={<ProtectedRoute><Chat /></ProtectedRoute>}/>
+              <Route path="/chat" element={<ProtectedRoute><MainChat /></ProtectedRoute>}/>
+              <Route path="/forgot" element={<ProtectedRoute><Forgot /></ProtectedRoute>}/>
+              <Route path="/notfound" element={<ProtectedRoute><Notfound /></ProtectedRoute>}/>
+              <Route path="/authorpage" element={<ProtectedRoute><Authorpage /></ProtectedRoute>}/>
+              <Route path="/storie" element={<ProtectedRoute><Storie /></ProtectedRoute>}/>
+              <Route path="/member" element={<ProtectedRoute><Member /></ProtectedRoute>}/>
+              <Route path="/group" element={<ProtectedRoute><Group /></ProtectedRoute>}/>
+              <Route path="/helpbox" element={<ProtectedRoute><Helpbox /></ProtectedRoute>}/>
+              <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>}/>
+              <Route path="/shop2" element={<ProtectedRoute><ShopTwo /></ProtectedRoute>}/>
 
                    
 
@@ -103,11 +123,10 @@ function App() {
                     <Route exact path={`${process.env.PUBLIC_URL}/hoteldetails`} component={Hotelsingle}/> 
                   
               </Routes>
-        </BrowserRouter>
+
         <ToastContainer />
     </>
       );
     }
-//     serviceWorker.register();
     
     export default App
