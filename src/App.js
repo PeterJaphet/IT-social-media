@@ -96,6 +96,7 @@ const ProtectedRoute = ({children}) =>{
               <Route path="/helpbox" element={<ProtectedRoute><Helpbox /></ProtectedRoute>}/>
               <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>}/>
               <Route path="/shop2" element={<ProtectedRoute><ShopTwo /></ProtectedRoute>}/>
+              <Route path="*" element={<Notfound />}/>
 
                    
 
