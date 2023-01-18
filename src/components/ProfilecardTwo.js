@@ -38,9 +38,9 @@ const ProfilecardTwo =(props)=> {
 
                     <h4 className="font-xs ls-1 fw-700 text-grey-900">{props.name}<span className="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">{props.email}</span></h4>
                     <div className="d-flex align-items-center pt-0 position-absolute left-15 top-10 mt-4 ms-2">
-                        <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2"><b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">{postItems.length} </b> Posts</h4>
-                        <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2"><b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">2.1k </b> Followers</h4>
-                        <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2"><b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">{followings.followingcount} </b> Followings</h4>
+                        <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2"><b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">{postItems?postItems.length:0} </b> Posts</h4>
+                        <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2"><b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">0 </b> Followers</h4>
+                        <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2"><b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">{followings?followings.followingcount:0} </b> Followings</h4>
                     </div>
                     <div className="d-flex align-items-center justify-content-center position-absolute right-15 top-10 mt-2 me-2">
                         <Link to="/member" className="d-none d-lg-block bg-success p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3">Add Friend</Link>
