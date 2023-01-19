@@ -106,13 +106,13 @@ class Event extends Component {
                                         </div>
                                         <div className="card-body p-0">
                                             <ul className="memberlist mt-4 mb-2 ms-0 d-inline-block">
-                                                <li><a href="/defaultevent"><img src="assets/images/user.png" alt="user" className="w30 d-inline-block" /></a></li>
-                                                <li><a href="/defaultevent"><img src="assets/images/user.png" alt="user" className="w30 d-inline-block" /></a></li>
-                                                <li><a href="/defaultevent"><img src="assets/images/user.png" alt="user" className="w30 d-inline-block" /></a></li>
-                                                <li><a href="/defaultevent"><img src="assets/images/user.png" alt="user" className="w30 d-inline-block" /></a></li>
-                                                <li className="last-member"><a href="/defaultevent" className="bg-greylight fw-600 text-grey-500 font-xssss ls-3 text-center">+2</a></li>
+                                                <li><a href="/event"><img src="assets/images/user.png" alt="user" className="w30 d-inline-block" /></a></li>
+                                                <li><a href="/event"><img src="assets/images/user.png" alt="user" className="w30 d-inline-block" /></a></li>
+                                                <li><a href="/event"><img src="assets/images/user.png" alt="user" className="w30 d-inline-block" /></a></li>
+                                                <li><a href="/event"><img src="assets/images/user.png" alt="user" className="w30 d-inline-block" /></a></li>
+                                                <li className="last-member"><a href="/event" className="bg-greylight fw-600 text-grey-500 font-xssss ls-3 text-center">+2</a></li>
                                             </ul>
-                                            <a href="/defaultevent" className="font-xsssss fw-700 ps-3 pe-3 lh-32 float-right mt-4 text-uppercase rounded-3 ls-2 bg-success d-inline-block text-white me-1">APPLY</a>
+                                            <a href="/event" className="font-xsssss fw-700 ps-3 pe-3 lh-32 float-right mt-4 text-uppercase rounded-3 ls-2 bg-success d-inline-block text-white me-1">APPLY</a>
                                         </div>
                                     </div>
                                 </div>
