@@ -103,7 +103,7 @@ export const friendsSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      //state.followings = null;
+      state.followings = null;
       state.isSuccessFollow = false;
     },
   },

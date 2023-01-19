@@ -29,6 +29,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Forgot from './pages/Forgot';
 import Notfound from './pages/Notfound';
+import Friends from './pages/Friends';
 
 
 import ShopOne from './pages/ShopOne';
@@ -52,6 +53,8 @@ import Userpage from './pages/Userpage';
 import Authorpage from './pages/Authorpage';
 import Hotelsingle from './pages/Hotelsingle';
 import Analytics from './pages/Analytics';
+import RandomPage from "./pages/RandomPage";
+import Chatbody from "./pages/Chatbody";
 
 function App() {
 
@@ -96,7 +99,14 @@ const ProtectedRoute = ({children}) =>{
               <Route path="/helpbox" element={<ProtectedRoute><Helpbox /></ProtectedRoute>}/>
               <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>}/>
               <Route path="/shop2" element={<ProtectedRoute><ShopTwo /></ProtectedRoute>}/>
+              <Route path="/event" element={<ProtectedRoute><Event /></ProtectedRoute>}/>
+              <Route path="/friends" element={<ProtectedRoute><Friends /></ProtectedRoute>}/>
               <Route path="*" element={<Notfound />}/>
+              <Route path="/chat/:id" element={
+                <MainChat>
+                  <Chatbody/>
+                </MainChat>
+              } />
 
                    
 

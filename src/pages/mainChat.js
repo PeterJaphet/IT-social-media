@@ -1,52 +1,93 @@
-import {Component} from 'react';
-import './mainChat.css'
-import NewChat from './newChat';
-import SideBar from './sideBar';
-import React, { useEffect, useState } from 'react';
-import Pusher from "pusher-js";
-import axios from "axios";
-import Rightchat from "../components/Rightchat";
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
+// import { useEffect, useRef, useState } from 'react';
+// import { Outlet } from "react-router-dom";
+// import Header from "../components/Header";
+// import Sidebar from './Sidebar'
+// import './mainChat.css'
+// import{useSelector,useDispatch} from 'react-redux';
+// import {
+//     userFollowing, reset
+//   } from "../features/auth/friends/friendsSlice";
 
+// import Chatbody from './Chatbody'
 
-
-function MainChat() {
-
-  const [messages, setMessages] = useState(["Hiiiiii"]);
-
-//   useEffect(() => {
-//     axios.get("/messages/sync").then((response) => {
-//       setMessages(response.data);
-//     })
-//   }, [])
+// function MainChat() {
+//   const dispatch = useDispatch();
+//   const {followings}  = useSelector(
+//     (state) => state.friends
+//   );
 
 //   useEffect(() => {
-//     const pusher = new Pusher('894ed19a99283a3ffb71', {
-//       cluster: 'eu'
-//     });
+//     dispatch(userFollowing())
 
-//     const channel = pusher.subscribe('messages');
-//     channel.bind('inserted', (newMessage) => {
-//       setMessages([...messages, newMessage])
-//     });
+//  },[dispatch]);
 
-//     return () => {
-//       channel.unbind_all();
-//       channel.unsubscribe();
-//     };
+//   return (
+//     <>
+//     <Header />
+//     <div className="main-content right-chat-active">
+//           <div className="middle-sidebar-bottom">
+//             <div
+//               className="middle-sidebar-left pe-0"
+//               style={{ maxWidth: "100%" }}
+//             >
+//               <div className="root1">
+//        <div>
+//         <Sidebar
+//          followings={followings.followinglist}
+//         />
+//         </div>
+//         <div>
+//         <Chatbody />
+//         </div>
+//         </div>
+//         </div>
+//         </div>
+//         </div>
 
-//   }, [messages]);
+// </>
 
-  console.log(messages);
+//   );
+// }
+
+// export default MainChat;
+
+import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header";
+import Sidebar from "./Sidebar";
+import "./mainChat.css";
+import { useSelector, useDispatch } from "react-redux";
+import { userFollowing, reset } from "../features/auth/friends/friendsSlice";
+
+import Chatbody from "./Chatbody";
+import RandomPage from "./RandomPage";
+
+function MainChat({ children }) {
+  const dispatch = useDispatch();
+  const { followings } = useSelector((state) => state.friends);
+
+  useEffect(() => {
+    dispatch(userFollowing());
+  }, [dispatch]);
 
   return (
-    <div className="app">
-      <div className="app__body">
-        <Rightchat />
-        {/* <SideBar />
-        <NewChat  messages={messages}/> */}
+    <>
+      <Header />
+      <div className="main-content right-chat-active">
+        <div className="middle-sidebar-bottom">
+          <div
+            className="middle-sidebar-left pe-0"
+            style={{ maxWidth: "100%" }}
+          >
+            <div className="root1">
+                <RandomPage children={children} followings={followings.followinglist } />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

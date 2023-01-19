@@ -4,7 +4,7 @@ import Leftnav from "../components/Leftnav";
 import Rightchat from "../components/Rightchat";
 import Appfooter from "../components/Appfooter";
 import Popupchat from "../components/Popupchat";
-import SideBar from './sideBar';
+
 
 class Chat extends Component {
   render() {
