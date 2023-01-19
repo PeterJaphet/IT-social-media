@@ -1,31 +1,56 @@
-import React from 'react';
-import "./sideBar.css";
-import SideChat from "./sideChat";
-import ChatIcon from '@material-ui/icons/Chat';
-import DonutLargeIcon from '@material-ui/icons/DonutLarge';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Avatar, IconButton } from '@material-ui/core';
-import { SearchOutlined } from "@material-ui/icons";
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-function SideBar() {
-    return (
-        <div className="sidebar">
-            <div className="sidebar_search">
-            <SearchOutlined />
-                <div className="sidebar__searchContainer">
-                    <SearchOutlined />
-                    <input placeholder="Search or Start New" type="text" />
-                </div>
-            </div>
 
-            <div className="sidebar__chats">
-                <SideChat />
-                <SideChat />
-                <SideChat />
-            </div>
 
+const Sidebar = (props) => {
+
+   
+
+  
+    console.log(props.followings)
+    const handleClick = () => {
+
+    }
+
+    return  (
+    
+    <div className="chat-wrapper pt-0 w-100 position-relative scroll-bar bg-white theme-dark-bg">
+    <div className='sidebar'>
+         <form className="chat-form">
+                      <div className="form-group">
+                        <input type="text" placeholder="Search" />
+                      </div>
+                      <button className="bg-current">
+                        <i className="ti-arrow-right text-white"></i>
+                      </button>
+                      <hr />
+                      {
+               props.followings? props.followings.map((item, index) => (
+                    <Link key={index}>
+                        <div className={`sidebar__menu__item active`} onClick={()=>{handleClick()}}>
+                             <div className="message-user">
+                            {/* <figure className="avatar"> */}
+                              {/* <img src={item.uploadUrl} alt="avater" /> */}
+                            {/* </figure> */}
+                            {/* <div> */}
+                              <h5>{item.username}</h5>
+                              <div className="time">01:35 PM</div>
+                            {/* </div> */}
+                            </div>
+                            {/* <hr /> */}
+                        </div>
+                        <hr />
+                    </Link>
+                    
+                )) : <div></div>
+            }
+                    </form>
+            
+        
         </div>
-    )
-}
+    </div>
+    
+)};
 
-export default SideBar
+export default Sidebar;
