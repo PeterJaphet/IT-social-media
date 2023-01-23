@@ -8,72 +8,26 @@ import axios from "axios";
 import Slider from "react-slick";
 import constants from "../hooks/constant";
 import { useEffect } from "react";
+import imageCompression from "browser-image-compression";
+import { useSelector, useDispatch } from "react-redux";
+import { Add } from "../features/auth/cafteria/cafteriaSlice";
+import { toast } from "react-toastify";
 
-const productList = [
-  {
-    imageUrl: "product.png",
-    name: "Kebab",
-    price: "69",
-  },
-  {
-    imageUrl: "product.png",
-    name: "Chicken & Chips",
-    price: "90",
-  },
-  {
-    imageUrl: "product.png",
-    name: "Cheese Burger",
-    price: "100",
-  },
-  {
-    imageUrl: "product.png",
-    name: "Chicken Burger",
-    price: "90",
-  },
-  // {
-  //     imageUrl: 'product.png',
-  //     name: 'Butler Stool Ladder',
-  //     price:'449'
-  // },
-  // {
-  //     imageUrl: 'product.png',
-  //     name: 'Butler Stool Ladder',
-  //     price:'449'
-  // },
-  // {
-  //     imageUrl: 'product.png',
-  //     name: 'Butler Stool Ladder',
-  //     price:'449'
-  // },
-  // {
-  //     imageUrl: 'product.png',
-  //     name: 'Butler Stool Ladder',
-  //     price:'449'
-  // },
-  // {
-  //     imageUrl: 'product.png',
-  //     name: 'Textured Sleeveless Camisole',
-  //     price:'449'
-  // },
-  // {
-  //     imageUrl: 'product.png',
-  //     name: 'Adjustable Shoulder Straps',
-  //     price:'449'
-  // },
-  // {
-  //     imageUrl: 'product.png',
-  //     name: 'Neck Strappy Camisole',
-  //     price:'449'
-  // },
-  // {
-  //     imageUrl: 'product.png',
-  //     name: 'Scoop-Neck Strappy',
-  //     price:'449'
-  // },
-];
-
-function ShopTwo () {
+function ShopTwo() {
   const API_URL = constants.API_URL;
+  const [auth, setAuth] = useState(0);
+
+  const dispatch = useDispatch();
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.cafteria
+  );
+  const { user} = useSelector(
+    (state) => state.auth
+  );
+  
+  useEffect(()=>{
+    setAuth(user.message.data.user.userRole);
+}, [])
 
   const sliderstyle = {
     paddingRight: 20 + "!important",
@@ -87,35 +41,103 @@ function ShopTwo () {
     centerMode: false,
   };
 
+  const [userData, setUserData] = useState([]);
+  const [userId, setUserId] = useState();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+
+    setUserData(user.message.data.user);
+    setUserId(user.message.data.user._id);
+    
+    console.log(user.message.data.user._id);
+    console.log(user.message.data.user);
+  }, []);
+
   const [drinks, setDrinks] = useState([]);
   const [foods, setFoods] = useState([]);
   const [extras, setExtras] = useState([]);
+  const [uploadUrl, setUploadUrl] = useState(null);
 
- 
-   
-    
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [category, setCategory] = useState("");
+  const [check, setCheck] = useState(false);
 
-   useEffect(() => {
-        axios.get(
-          `${API_URL}/cafeteria/getItemCategory/${1}`
-        ).then((response)=>{
-           setDrinks( response.data.message.data);
-        });
+  const handleFile = (e) => {
+    if (e.target.files < 1 || !e.target.validity.valid) {
+      return;
+    }
+    compressImageFile(e);
+  };
 
-        axios.get(
-            `${API_URL}/cafeteria/getItemCategory/${2}`
-          ).then((response)=>{
-             setFoods( response.data.message.data);
-          });
+  // converting to base64
+  function fileToBase64(file, cb) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      cb(null, reader.result);
+    };
+    reader.oneerror = function (error) {
+      cb(error, null);
+    };
+  }
 
-          axios.get(
-            `${API_URL}/cafeteria/getItemCategory/${3}`
-          ).then((response)=>{
-             setExtras( response.data.message.data);
-          });
-  }, []);
+  //compressing image
+  async function compressImageFile(event) {
+    const imageFile = event.target.files[0];
 
-  console.log(drinks);
+    const options = {
+      maxWidthOrHeight: 800,
+      useWebWorker: true,
+    };
+
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      //input file is compressed tin compressedFile, now write further logic here
+      fileToBase64(compressedFile, (err, result) => {
+        if (result) {
+          setUploadUrl(result);
+        }
+      });
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess) {
+        toast.success("added successfully");
+    }
+  }, [isError, isSuccess, message, dispatch]);
+
+    useEffect(() => {
+  axios.get(`${API_URL}/cafeteria/getItemCategory/${1}`).then((response) => {
+    setDrinks(response.data.message.data);
+  });
+
+  axios.get(`${API_URL}/cafeteria/getItemCategory/${2}`).then((response) => {
+    setFoods(response.data.message.data);
+  });
+
+  axios.get(`${API_URL}/cafeteria/getItemCategory/${3}`).then((response) => {
+    setExtras(response.data.message.data);
+  });
+    }, [dispatch,isSuccess]);
+
+  async function handleAddItems (e){
+    e.preventDefault();
+    if(uploadUrl!==null){
+    const cafteriaItems = { userId, name, price, category, uploadUrl };
+    dispatch(Add(cafteriaItems));
+    console.log(cafteriaItems);
+    }
+    else{
+        toast.warning("upload url is null");
+    }
+
+  };
 
   return (
     <Fragment>
@@ -246,7 +268,7 @@ function ShopTwo () {
                     </div>
                   ))}
 
-<div className="col-lg-12 mt-5 mb-0 text-center">
+                  <div className="col-lg-12 mt-5 mb-0 text-center">
                     <span className="fw-700 text-white font-xssss text-uppercase ls-3 lh-32 rounded-3 mt-3 text-center d-inline-block p-2 bg-current w150">
                       Extras
                     </span>
@@ -282,7 +304,7 @@ function ShopTwo () {
                     </div>
                   ))}
 
-<div className="col-lg-12 mt-5 mb-0 text-center">
+                  <div className="col-lg-12 mt-5 mb-0 text-center">
                     <span className="fw-700 text-white font-xssss text-uppercase ls-3 lh-32 rounded-3 mt-3 text-center d-inline-block p-2 bg-current w150">
                       Drinks
                     </span>
@@ -326,6 +348,88 @@ function ShopTwo () {
                         Load More
                       </a>
                     </div> */}
+
+                 {auth===5? <div className="container-sm|md|lg|xl p-5 my-5">
+                    {/* <form> */}
+                    <div className="row">
+                      <div className="col">
+                        <label for="Name" className="text-black fw-700">
+                          Name:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Enter Name"
+                          name="name"
+                          required
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      </div>
+                      <div className="col">
+                        <label
+                          for="Price"
+                          className="aria-label text-black fw-700"
+                        >
+                          Price:
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          placeholder="Enter price"
+                          name="Price"
+                          required
+                          value={price}
+                          onChange={(e) => setPrice(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-lg-12 mt-4">
+                      <div className="form-group">
+                        <label className="aria-label text-black fw-700">
+                          Type:<br></br>
+                        </label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          required
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                        >
+                          <option value="" selected>
+                           Select
+                          </option>
+                          <option value="2">MENU</option>
+                          <option value="1">DRINKS</option>
+                          <option value="3">EXTRAS</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="col mt-4">
+                      <label className="aria-label text-black fw-700 p-0">
+                        Image:<br></br>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        accept=".jpg, .jpeg, .png"
+                        onChange={handleFile}
+                      />
+                    </div>
+
+                    <div className="col-sm-12 p-0 text-left mt-4">
+                      <div className="form-group mb-1">
+                        <button
+                          className="btn-group btn-dark form-control text-center style2-input fw-600 p-0"
+                          onClick={handleAddItems}
+                        >
+                          ADD
+                        </button>
+                      </div>
+                    </div>
+                    {/* </form> */}
+                  </div>:<span></span>}
                 </div>
               </div>
             </div>
@@ -336,6 +440,6 @@ function ShopTwo () {
       <Appfooter />
     </Fragment>
   );
-};
+}
 
 export default ShopTwo;
