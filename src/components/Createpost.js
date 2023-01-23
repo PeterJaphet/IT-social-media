@@ -18,12 +18,14 @@ function Createpost() {
   const [userData, setUserData] = useState([]);
   const [userId, setUserId] = useState();
   const [disable, setDisable] = useState(false);
+ 
   
 
   const dispatch = useDispatch();
   const {isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.post
   );
+
 
   const toggleOpen = () => setIsOpen(!isOpen);
 
@@ -34,8 +36,10 @@ function Createpost() {
     if (user) {
       setUserData(user.message.data.user);
       setUserId(user.message.data.user._id);
+     
       console.log(userId)
       console.log(userData)
+      
     }
   }, []);
 
@@ -96,6 +100,8 @@ function Createpost() {
           setFile(result);
           setUploadUrl(result);
           setFile64String(String(result.split(",")[1]));
+          
+     
         }
       });
     } catch (error) {
@@ -160,7 +166,7 @@ function Createpost() {
         <input
           style={{ display: "none" }}
           type="file"
-          accept=".jpg, .jpeg, .png .mp4 .mov"
+          accept=".jpg, .jpeg, .png, .mp4, .mov"
           onChange={handleFileSelection}
           ref={fileInput}
         />
