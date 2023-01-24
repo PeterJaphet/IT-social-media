@@ -13,6 +13,8 @@ import Createpost from '../components/Createpost';
 import Events from '../components/Events';
 import Postview from '../components/Postview';
 import Load from '../components/Load';
+import { getUserPosts } from "../features/auth/post/postSlice";
+import { useDispatch, useSelector } from "react-redux";
 // import emuBanner from '../../public/assets/images/emuPic.png'
 
 const Userpage = ()=> {
@@ -20,15 +22,27 @@ const Userpage = ()=> {
     const [profileData,setProfileData] = useState([]);
 
 // Get Data from local storage
-
+const user = JSON.parse(localStorage.getItem("user"));
 useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+   
     console.log(user);
      if (user) {
        setProfileData(user.message.data.user);
- 
      }
    }, []);
+
+   const dispatch = useDispatch();
+    
+
+   const {userPostItems} = useSelector((state)=>state.post);
+
+   useEffect(() => {
+      dispatch(getUserPosts(user.message.data.user._id))
+      console.log(user.message.data.user._id)
+
+   },[dispatch]);
+
+   console.log(profileData._id)
 
         return (
             <Fragment> 
@@ -50,6 +64,7 @@ useEffect(() => {
                                     <ProfilecardTwo 
                                     name={profileData.firstName+" "+profileData.lastName} 
                                     email={profileData.email}
+                                    noPost={userPostItems.length}
                                     />
                                 </div>
                                 <div className="col-xl-4 col-xxl-3 col-lg-4 pe-0">
@@ -59,9 +74,24 @@ useEffect(() => {
                                 </div>
                                 <div className="col-xl-8 col-xxl-9 col-lg-8">
                                     <Createpost />
-                                    {/* <Postview id="32" postvideo="" postimage="post.png" avater="user.png" user="Surfiya Zakir" time="22 min ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
-                                    <Postview id="31" postvideo="" postimage="post.png" avater="user.png" user="David Goria" time="22 min ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." />
-                                    <Postview id="33" postvideo="" postimage="post.png" avater="user.png" user="Anthony Daugloi" time="2 hour ago" des="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus." /> */}
+                                    {userPostItems && userPostItems.map((post)=>{
+                                        return(
+                                        <Postview 
+                                        key={post.post._id}
+                                        _id = {post.post._id}
+                                        userId={post.post.userId}
+                                        text={post.post.text}
+                                        uploadUrl={post.post.uploadUrl}
+                                        createdAt = {post.post.createdAt}
+                                        avater="user.png"
+                                        username = {post.user.firstName+" "+post.user.lastName}
+                                        userLike ={post.post.userLike}
+                                        likes={post.post.likes}
+                                        commentList={post.comments}
+                                       
+                                        />
+                                        )
+                                    })}
                                     <Load />
                                     
                                 </div>

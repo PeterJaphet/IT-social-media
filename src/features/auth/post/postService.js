@@ -25,8 +25,8 @@ const getPost = async (id) => {
 
 
     //console.log(`${API_URL}/post/getUserPosts/${id}/0/50`)
-    //const response = await axios.get(`${API_URL}/post/getAllPostsFromUsersYouFollow/${id}/0/50`);
-    const response = await axios.get(`${API_URL}/post/getAllPosts/${id}/0/50`);
+    const response = await axios.get(`${API_URL}/post/getAllPostsFromUsersYouFollow/${id}/0/50`);
+    // const response = await axios.get(`${API_URL}/post/getAllPosts/${id}/0/50`);
 
    // if(response.data){
     //    const postItems = JSON.parse(localStorage.getItem('postItems'));

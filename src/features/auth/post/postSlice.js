@@ -8,6 +8,7 @@ const API_URL = constants.API_URL;
 
 const initialState = {
   postItems: [],
+  userPostItems:[],
   comments:[],
   isError: false,
   isGetPostError: false,
@@ -59,6 +60,34 @@ export const getPosts = createAsyncThunk(
     try {
       // const token =thunkAPI.getState.auth.user.message.data.token;
       return await postService.getPost(user.message.data.user._id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+//getComments function
+
+async function getPost(id) {
+  const response = await axios.get(
+  `${API_URL}/post/getUserPosts/${id}/0/50`
+    // `${API_URL}/post/getUserPosts/63631b38e17c31c0e72c31a7/0/50`
+  );
+
+  return response.data;
+}
+
+export const getUserPosts = createAsyncThunk(
+  "post/getUserPosts",
+  async (id, thunkAPI) => {
+    try {
+      return await getPost(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -179,7 +208,7 @@ export const postSlice = createSlice({
       state.isGetPostSuccess= false;
       state.isSuccess= false;
       state.isLoading= false;
-      // state.isCommentSuccess=false;
+       state.isCommentSuccess=false;
       state.message= "";
     },
     COMMENT_RESET: (state) =>{
@@ -222,6 +251,11 @@ export const postSlice = createSlice({
       })
       .addCase(getComments.fulfilled, (state, action)=>{
         state.comments = action.payload.message.data
+      })
+      .addCase(getUserPosts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isGetPostSuccess = true;
+        state.userPostItems = action.payload.message.data;
       })
   },
 });
