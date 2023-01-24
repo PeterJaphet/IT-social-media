@@ -10,8 +10,9 @@ import constants from "../hooks/constant";
 import { useEffect } from "react";
 import imageCompression from "browser-image-compression";
 import { useSelector, useDispatch } from "react-redux";
-import { Add } from "../features/auth/cafteria/cafteriaSlice";
+import { reset, Add } from "../features/auth/cafteria/cafteriaSlice";
 import { toast } from "react-toastify";
+import { useRef } from "react";
 
 function ShopTwo() {
   const API_URL = constants.API_URL;
@@ -49,15 +50,13 @@ function ShopTwo() {
 
     setUserData(user.message.data.user);
     setUserId(user.message.data.user._id);
-    
-    console.log(user.message.data.user._id);
-    console.log(user.message.data.user);
   }, []);
 
   const [drinks, setDrinks] = useState([]);
   const [foods, setFoods] = useState([]);
   const [extras, setExtras] = useState([]);
   const [uploadUrl, setUploadUrl] = useState(null);
+  const aRef = useRef(null);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -124,6 +123,10 @@ function ShopTwo() {
   axios.get(`${API_URL}/cafeteria/getItemCategory/${3}`).then((response) => {
     setExtras(response.data.message.data);
   });
+
+  return () => {
+    dispatch(reset());
+  };
     }, [dispatch,isSuccess]);
 
   async function handleAddItems (e){
@@ -132,6 +135,10 @@ function ShopTwo() {
     const cafteriaItems = { userId, name, price, category, uploadUrl };
     dispatch(Add(cafteriaItems));
     console.log(cafteriaItems);
+    setName("");
+    setPrice("");
+    setCategory("");
+    aRef.current.value=null;
     }
     else{
         toast.warning("upload url is null");
@@ -415,6 +422,7 @@ function ShopTwo() {
                         className="form-control"
                         accept=".jpg, .jpeg, .png"
                         onChange={handleFile}
+                        ref={aRef}
                       />
                     </div>
 

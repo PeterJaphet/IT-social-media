@@ -2,16 +2,19 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../features/auth/post/postSlice";
-import { userFollowing } from "../features/auth/friends/friendsSlice";
+import { userFollowers, userFollowing } from "../features/auth/friends/friendsSlice";
 
 const ProfilecardTwo = (props) => {
   const dispatch = useDispatch();
 
   const { postItems } = useSelector((state) => state.post);
   const { followings } = useSelector((state) => state.friends);
+  const { followers } = useSelector((state) => state.friends);
+  const {userPostItems} = useSelector((state)=>state.post);
   useEffect(() => {
     dispatch(getPosts());
     dispatch(userFollowing());
+    dispatch(userFollowers());
   }, [dispatch]);
   // useEffect(() => {
 
@@ -19,6 +22,7 @@ const ProfilecardTwo = (props) => {
 
   console.log(postItems);
   console.log(followings);
+  console.log(followers);
 
   return (
     <div className="card w-100 shadow-xss rounded-xxl border-0 mb-3 mt-3 overflow-hidden">
@@ -47,24 +51,24 @@ const ProfilecardTwo = (props) => {
           </span>
         </h4>
         <div className="d-flex align-items-center pt-0 position-absolute left-15 top-10 mt-4 ms-2">
-          <Link>
+          <Link to="/userpage">
             <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2">
               <b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">
-                {postItems ? postItems.length : 0}{" "}
+                {props.noPost>1 ? props.noPost : 0}{" "}
               </b>{" "}
               Posts
             </h4>
           </Link>
-          <Link>
+          <Link to="/friends" state={followers.followerslist} action={""}>
             {" "}
             <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2">
               <b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">
-                0{" "}
+              {followers ? followers.followerscount : 0}{" "}
               </b>{" "}
               Followers
             </h4>
           </Link>
-          <Link to="/friends" state={followings.followinglist}>
+          <Link to="/friends" state={followings.followinglist} action={"UNFOLLOW"}>
             {" "}
             <h4 className="font-xsssss text-center d-none d-lg-block text-grey-500 fw-600 ms-2 me-2">
               <b className="text-grey-900 mb-1 font-sm fw-700 d-inline-block ls-3 text-dark">

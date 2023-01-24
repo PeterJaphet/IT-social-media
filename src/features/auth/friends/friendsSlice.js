@@ -98,6 +98,32 @@ export const userFollowing = createAsyncThunk(
   }
 );
 
+//get following
+async function follower(id) {
+  const response = await axios.get(
+    `${API_URL}/follow/userfollowers/${id}`
+  );
+
+  return response.data;
+}
+
+export const userFollowers = createAsyncThunk(
+  "friends/followers",
+  async (_, thunkAPI) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    try {
+      return await follower(user.message.data.user._id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 export const friendsSlice = createSlice({
   name: "friends",
   initialState,
@@ -122,7 +148,10 @@ export const friendsSlice = createSlice({
       })
       .addCase(followUser.fulfilled, (state) => {
         state.isSuccessFollow = true;
-      });
+      })
+      .addCase(userFollowers.fulfilled, (state,action) => {
+        state.followers =action.payload.message.data;
+      })
   },
 });
 

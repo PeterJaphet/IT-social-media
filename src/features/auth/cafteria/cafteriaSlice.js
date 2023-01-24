@@ -45,7 +45,7 @@ async function addItems(items) {
 
   async function add(items) {
     const response = await axios.post(
-        `${API_URL}/announcement/getallannouncement/`,items
+        `${API_URL}/announcement/addannouncement`,items
     );
   
     return response.data;
@@ -80,6 +80,7 @@ async function addItems(items) {
             state.isError = false;
             state.message = '';
             state.isSuccess = false;
+            state.isSuccessAnnouncement = false;
         }
     },
     extraReducers:(builder) => {
@@ -103,7 +104,7 @@ async function addItems(items) {
         })
         .addCase(addAnnouncement.fulfilled,(state,action)=>{
             state.isLoading = false
-            state.isSuccess =true
+            state.isSuccessAnnouncement =true
             state.announcements = action.payload
         })
         .addCase(addAnnouncement.rejected, (state, action) => {
