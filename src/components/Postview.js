@@ -25,6 +25,7 @@ import {
   reset,
   COMMENT_RESET,
   getComments,
+  getPosts,
 } from "../features/auth/post/postSlice";
 
 function Postview(props) {
@@ -39,7 +40,9 @@ function Postview(props) {
   const [sendButtonDisable, setSendButtonDisable] = useState(true);
   const dispatch = useDispatch();
 
-  const { comments, isCommentSuccess } = useSelector((state) => state.post);
+  const { comments, isCommentSuccess, isGetPostSuccess } = useSelector(
+    (state) => state.post
+  );
 
   const toggleOpen = () => setIsOpen(!isOpen);
   const toggleActive = () => setIsActive(!isActive);
@@ -49,22 +52,16 @@ function Postview(props) {
   const emojiClass = `${isActive ? " active" : ""}`;
   const [loveStatus, setLoveStatus] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(getComments({ postid: props._id }));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getPosts());
 
-  //console.log(comments);
-
-  // useEffect(() => {
-  //   localStorage.setItem('likeStatus', JSON.stringify(loveStatus))
-  //   console.log(loveStatus)
-  // },[loveStatus])
+    return () => {
+      dispatch(reset());
+    };
+  }, [isCommentSuccess]);
 
   function handleLove() {
     const user = JSON.parse(localStorage.getItem("user"));
-    // console.log(props.userLike)
-    // console.log(user.message.data.user._id)
-    // console.log(props.likes)
 
     if (!props.userLike.includes(user.message.data.user._id)) {
       setLoveStatus(true);
@@ -82,7 +79,7 @@ function Postview(props) {
       );
     }
   }
-  console.log(props.commentList)
+  console.log(props.commentList);
 
   function handleCommentButtonClick(e) {
     setCommentStatus(!commentStatus);
@@ -313,7 +310,6 @@ function Postview(props) {
                         userid: user.message.data.user._id,
                         message: commentContent,
                       })
-                     
                     );
                     setCommentContent("");
                   }}
@@ -324,26 +320,28 @@ function Postview(props) {
             </div>
           </form>
           {props.commentList.map((item) => (
-            <div className="border roounded border-info my-3 px-2 pb-2">
-              <div className="d-flex align-items-center my-2">
-                <div className="me-auto mx-1">
-                  {/* <Hashicon value={item.userid} size={30} />{" "} */}
-                  <figure className="avatar me-3 mt-3">
-          <img
-            src={`assets/images/${props.avater}`}
-            alt="avater"
-            className="shadow-sm rounded-circle w45"
-          /></figure>
-                </div>
-                <div className="w-100 mx-1 fw-bold">
-                  <span>
-                    {user.message.data.user.firstName +
-                      " " +
-                      user.message.data.user.lastName}
+            <div className="border rounded-xxl  border-info my-1 pb-1">
+              <div className="ms-3 pt-2 d-flex">
+                {/* <figure className="avatar me-3"> */}
+                  <img
+                    src={`assets/images/${props.avater}`}
+                    alt="avater"
+                    className="shadow-sm rounded-circle w45"
+                  />
+                {/* </figure> */}
+                <h4 className="fw-700 text-grey-900 font-xssss mt-1 ms-2">
+                  {" "}
+                  {} {item.username}{" "}
+                  <span className="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">
+                    {" "}
+                    {timeAgo.format(new Date(item.createdAt).getTime())}
                   </span>
-                </div>
+                </h4>
               </div>
-              <div className="w-100 mx-1 ml-3">{item.message}</div>
+
+              <div className="w-100 ms-4">
+                <p className="font-xsss fw-500 mb-1 lh-3 ms-1 mt-1">{item.message}</p>
+              </div>
             </div>
           ))}
         </>

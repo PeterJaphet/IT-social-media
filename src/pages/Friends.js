@@ -14,6 +14,8 @@ import Rightchat from "../components/Rightchat";
 import ProfilecardTwo from "../components/ProfilecardTwo";
 import { useLocation } from "react-router-dom";
 import { padding } from "@mui/system";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserPosts } from "../features/auth/post/postSlice";
 
 export default function Friends() {
   const [profileData, setProfileData] = useState([]);
@@ -28,10 +30,21 @@ export default function Friends() {
 
   const location = useLocation();
   const following = location.state;
+  const action=location.action;
 
-  const handleClick = () =>{
-    console.log("hello")
-  }
+  const handleClick = () => {
+    console.log("hello");
+  };
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const dispatch = useDispatch();
+
+  const { userPostItems } = useSelector((state) => state.post);
+
+  useEffect(() => {
+    dispatch(getUserPosts(user.message.data.user._id));
+    console.log(user.message.data.user._id);
+  }, [dispatch]);
 
   return (
     <>
@@ -47,6 +60,7 @@ export default function Friends() {
                 <ProfilecardTwo
                   name={profileData.firstName + " " + profileData.lastName}
                   email={profileData.email}
+                  noPost={userPostItems.length}
                 />
               </div>
 
@@ -58,8 +72,8 @@ export default function Friends() {
                       width: "100%",
                       //   maxWidth: 500,
                       bgcolor: "background.paper",
-                     // bgcolor: "blue",
-                      borderRadius: "5px"
+                      // bgcolor: "blue",
+                      borderRadius: "5px",
                     }}
                   >
                     {following.map((item, index) => {
@@ -72,33 +86,25 @@ export default function Friends() {
                               className="mt-0 btn pt-2 pb-2 ps-3 pe-3 lh-24 ms-1 ls-3 d-inline-block rounded-xl bg-success font-xsssss fw-700 ls-lg text-white"
                               onClick={() => {}}
                             >
-                              UNFOLLOW
+                             {action}
                             </span>
                           }
                           disablePadding
-
                           dense
                           sx={{
                             bgcolor: "#e6ebeb",
                             borderRadius: "5px",
-                            marginBottom:"5px",
-                            padding:"8px"
+                            marginBottom: "5px",
+                            padding: "8px",
                           }}
-                          
                         >
-                          <ListItemButton
-                          onClick={()=>handleClick()}
-                          >
-                            
+                          <ListItemButton onClick={() => handleClick()}>
                             <ListItemAvatar>
-                              <Avatar
-                             
-                              >
+                              <Avatar>
                                 <img
                                   src={item.uploadUrl}
                                   alt=""
                                   height="45px"
-                                 
                                 />
                               </Avatar>
                             </ListItemAvatar>
@@ -106,7 +112,6 @@ export default function Friends() {
                               id={labelId}
                               primary={item.username}
                             />
-                          
                           </ListItemButton>
                         </ListItem>
                       );
