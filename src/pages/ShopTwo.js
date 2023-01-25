@@ -72,7 +72,7 @@ const productList = [
   // },
 ];
 
-function ShopTwo () {
+function ShopTwo() {
   const API_URL = constants.API_URL;
 
   const sliderstyle = {
@@ -91,28 +91,18 @@ function ShopTwo () {
   const [foods, setFoods] = useState([]);
   const [extras, setExtras] = useState([]);
 
- 
-   
-    
+  useEffect(() => {
+    axios.get(`${API_URL}/cafeteria/getItemCategory/${1}`).then((response) => {
+      setDrinks(response.data.message.data);
+    });
 
-   useEffect(() => {
-        axios.get(
-          `${API_URL}/cafeteria/getItemCategory/${1}`
-        ).then((response)=>{
-           setDrinks( response.data.message.data);
-        });
+    axios.get(`${API_URL}/cafeteria/getItemCategory/${2}`).then((response) => {
+      setFoods(response.data.message.data);
+    });
 
-        axios.get(
-            `${API_URL}/cafeteria/getItemCategory/${2}`
-          ).then((response)=>{
-             setFoods( response.data.message.data);
-          });
-
-          axios.get(
-            `${API_URL}/cafeteria/getItemCategory/${3}`
-          ).then((response)=>{
-             setExtras( response.data.message.data);
-          });
+    axios.get(`${API_URL}/cafeteria/getItemCategory/${3}`).then((response) => {
+      setExtras(response.data.message.data);
+    });
   }, []);
 
   console.log(drinks);
@@ -246,7 +236,7 @@ function ShopTwo () {
                     </div>
                   ))}
 
-<div className="col-lg-12 mt-5 mb-0 text-center">
+                  <div className="col-lg-12 mt-5 mb-0 text-center">
                     <span className="fw-700 text-white font-xssss text-uppercase ls-3 lh-32 rounded-3 mt-3 text-center d-inline-block p-2 bg-current w150">
                       Extras
                     </span>
@@ -282,7 +272,90 @@ function ShopTwo () {
                     </div>
                   ))}
 
-<div className="col-lg-12 mt-5 mb-0 text-center">
+                  <div className="container-sm|md|lg|xl p-5 my-5">
+                    <form>
+                      <div className="row">
+                        <div className="col">
+                          <label for="Name" className="text-black fw-700">
+                            Headimg:
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter Headline"
+                            name="Heading"
+                          />
+                        </div>
+                        <div className="col">
+                          <label
+                            for="Author"
+                            className="aria-label text-black fw-700"
+                          >
+                            Author:
+                          </label>
+                          <input
+                            type="mumber"
+                            className="form-control"
+                            placeholder="Enter Author"
+                            name="Author"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-12 mt-4">
+                        <div className="form-group">
+                        <label className="aria-label text-black fw-700 p-0">
+                          Social media announcement type:<br></br>
+                        </label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                        >
+                          <option selected>Select Type</option>
+                          <option value="1">Event</option>
+                          <option value="2">Intership</option>
+                          <option value="3">Job Post</option>
+                          <option value="4">News</option>
+                        </select>
+                        </div>
+                      </div>
+
+                      <div className="col mt-4">
+                        <label className="aria-label text-black fw-700 p-0">
+                          Text :
+                        </label>
+                        <textarea
+                          name="message"
+                          className="h100 bor-0 w-100 rounded-xxl p-2  text-grey-500 fw-500 border-light-md theme-dark-bg"
+                          cols="30"
+                          rows="10"
+                          placeholder="Enter Text "
+                        ></textarea>
+                      </div>
+
+                      <div className="col mt-4">
+                        <label className="aria-label text-black fw-700 p-0">
+                          Image:<br></br>
+                        </label>
+                        <input
+                          type="file"
+                          className="form-control"
+                          accept=".jpg, .jpeg, .png"
+                          // onChange={() => handleFile}
+                        />
+                      </div>
+
+
+                      <div className="col-sm-12 text-left">
+                        <div className="form-group mb-1 mt-4">
+                          <button className="btn-group btn-dark form-control text-center style2-input fw-600 p-0">
+                            Post
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div className="col-lg-12 mt-5 mb-0 text-center">
                     <span className="fw-700 text-white font-xssss text-uppercase ls-3 lh-32 rounded-3 mt-3 text-center d-inline-block p-2 bg-current w150">
                       Drinks
                     </span>
@@ -336,6 +409,6 @@ function ShopTwo () {
       <Appfooter />
     </Fragment>
   );
-};
+}
 
 export default ShopTwo;

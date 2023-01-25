@@ -56,7 +56,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import Sidebar from "./Sidebar";
+// import Sidebar from "./Sidebar";
 import "./mainChat.css";
 import { useSelector, useDispatch } from "react-redux";
 import { userFollowing, reset } from "../features/auth/friends/friendsSlice";

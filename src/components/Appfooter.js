@@ -9,7 +9,7 @@ class Appfooter extends Component {
                 <Link to="/video" className="nav-content-bttn"><i className="feather-package"></i></Link>
                 <Link to="/live" className="nav-content-bttn" data-tab="chats"><i className="feather-layout"></i></Link>           
                 <Link to="/shop2" className="nav-content-bttn"><i className="feather-layers"></i></Link>
-                <Link to="/settings" className="nav-content-bttn"><img src="assets/images/female-profile.png" alt="user" className="w30 shadow-xss" /></Link>
+                <Link to="/settings" className="nav-content-bttn"><i className="feather-settings"></i></Link>
             </div>        
         );
     }
